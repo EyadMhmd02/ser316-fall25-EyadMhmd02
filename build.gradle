@@ -1,0 +1,105 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.guardsquare:proguard-gradle:7.4.2'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'application'
+   // id 'checkstyle'
+   // id 'com.github.spotbugs' version '6.0.26'
+   // id 'jacoco'
+}
+//
+//group = 'edu.asu.ser316'
+//version = '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    implementation files('cls/')
+    testImplementation files('cls/')  // Add this
+}
+
+// Uncomment for Assignment 2+ to exclude BlackBoxGiven from gradle test
+// test {
+//     exclude '**/BlackBox.class'
+// }
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+
+   // finalizedBy jacocoTestReport
+}
+
+// // Uncomment for Assignment 4 - Checkstyle configuration
+// checkstyle {
+//    toolVersion = '10.12.5'
+//    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+//    ignoreFailures = true
+//    showViolations = true
+// }
+
+// checkstyleMain {
+//    source = 'src/main/java'
+// }
+
+// checkstyleTest {
+//    source = 'src/test/java'
+// }
+
+// // Uncomment for Assignment 4 - SpotBugs configuration
+// spotbugs {
+//    ignoreFailures = true
+// }
+
+// spotbugsMain {
+//    reports {
+//        html {
+//            required = true
+//            outputLocation = file("$buildDir/reports/spotbugs/main.html")
+//            setStylesheet('fancy-hist.xsl')
+//        }
+//    }
+// }
+
+// spotbugsTest {
+//    reports {
+//        html {
+//            required = true
+//            outputLocation = file("$buildDir/reports/spotbugs/test.html")
+//            setStylesheet('fancy-hist.xsl')
+//        }
+//    }
+// }
+
+// // JaCoCo for code coverage
+// jacoco {
+//    toolVersion = "0.8.12"
+// }
+
+// jacocoTestReport {
+//    reports {
+//        xml.required = true
+//        html.required = true
+//        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+//    }
+// }
