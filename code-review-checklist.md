@@ -22,16 +22,16 @@ Review ALL source files in the project and identify defects using the categories
 
 | Defect ID | File | Line(s) | Category | Description | Severity |
 |-----------|------|---------|----------|-------------|----------|
-| 1 | Order.java | 241-290 | MD | The JavaDoc for `processOrderItem()` is excessively long and describes internal logic instead of external behavior. This violates documentation best practices. | Medium |
-| 2 | Restaurant.java | 13 | CS | Variable name `x` is unclear and doesn’t follow standard naming conventions. It should be renamed to something descriptive like `menuItemCount`. | Low |
-| 3 | Restaurant.java | 108-113 | CG | The `formatPrice() method performs inefficient string concatenation. Should use `String.format("$%.2f", price)` for better readability and precision. | Medium |
-| 4 | Restaurant.java | 98 | CG | The private method removeMenuItem()` is never used. This introduces dead code and potential confusion. It should be removed or tested. | Low |
-| 5 | Restaurant.java | 121 | FD | `calculateDiscount() performs raw multiplication without validation. If `discountPercent > 1`, it will incorrectly increase price. Validation is required. | High |
-| 6 | MenuItem.java | 40-45 | CS | Inconsistent indentation and missing space before braces in `addAllowedModifier() reduces readability. | Low |
-| 7 | Order.java | 210 | CG | Multiple nested conditionals make the method hard to read. Suggest refactoring with early returns or helper methods. | Medium |
-| 8 | Restaurant.java | 85 | MD | `printMenu() lacks proper formatting and does not align prices or categories clearly for users. | Low |
-| 9 | Table.java | 32 | FD | `assignServer() does not validate if the table is already assigned. Could lead to overwriting server assignment. | High |
-| 10 | Order.java | 152 | CG | No unit test coverage for helper methods like `validateModifier()`, making debugging harder. | Medium |
+| 1 | Main.java | 22 | FD | Uses `Order1` which does not exist; should be `Order`. Causes compilation failure. | Critical |
+| 2 | Main.java | 149-176 | FD | `interpretResultCode()` expects promotion codes in the 6.x range, conflicting with the spec in `Order.java` which defines promotions as 0.x. Mismatched protocol leads to incorrect messaging. | High |
+| 3 | Restaurant.java | 11-13 | CS | Poor variable names: `m`, `n`, and `x` are non-descriptive. Rename to `menuById`, `name`, and `menuItemCount`. | Low |
+| 4 | Restaurant.java | 116-121 | CG | `formatPrice()` builds strings via repeated concatenation and does not format to two decimals. Prefer `String.format("$%.2f", price)`. | Medium |
+| 5 | Restaurant.java | 87-89 | CG | `removeMenuItem()` is private and never used (dead code). Remove or add tests/callers. | Low |
+| 6 | Order.java | 267-269 | FD | `processOrderItem()` is a stub that always returns 0.0; none of the documented validations or updates are implemented. | Critical |
+| 7 | Order.java | 137-151 | CG | `areModifiersCompatible()` contains empty `else` branches and redundant checks; simplify with early returns. | Low |
+| 8 | Order.java | 352-371 | CG | `generateOrderSummary()` uses inefficient string concatenation in a loop and vague parameters (`disc`, `incTotal`). Use `StringBuilder` and clearer naming. | Low |
+| 9 | Order.java | 374-391 | FD | `processPayment()` sets status to PAID without validating amount or matching total; missing basic payment validation and error handling. | High |
+| 10 | MenuItem.java | 151-153 | CG | `setStockCount(int)` allows negative values; add validation to prevent invalid stock. | Low |
 **Severity Levels:**
 - **Critical**: Causes system failure, data corruption, or security issues
 - **High**: Major functional defect or significant quality issue
