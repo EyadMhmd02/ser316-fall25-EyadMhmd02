@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WhiteBoxTestStarter" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-05T16:46:09" hostname="DESKTOP-U5QG706" time="0.0">
+<testsuite name="WhiteBoxTestStarter" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-11-05T17:04:36" hostname="DESKTOP-U5QG706" time="0.009">
   <properties/>
+  <testcase name="testCanModifyOrder_ItemsAtLimit_ReturnsFalse()" classname="WhiteBoxTestStarter" time="0.002"/>
+  <testcase name="testCanModifyOrder_TotalAtOrAboveMax_ReturnsFalse()" classname="WhiteBoxTestStarter" time="0.004"/>
+  <testcase name="testCanModifyOrder_StatusAtLeast2_ReturnsFalse()" classname="WhiteBoxTestStarter" time="0.001"/>
   <testcase name="testCanModifyOrder_AllConditionsFalse_ReturnsTrue()" classname="WhiteBoxTestStarter" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
