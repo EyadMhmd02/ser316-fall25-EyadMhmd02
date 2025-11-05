@@ -114,9 +114,6 @@ public class Restaurant {
      * @return
      */
     public String formatPrice(double price) {
-        String result = "";
-        result = result + "$";
-        result = result + price;
-        return result;
+        return String.format("$%.2f", price);
     }
 }
