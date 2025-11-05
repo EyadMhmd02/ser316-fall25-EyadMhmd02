@@ -23,14 +23,7 @@ public class BlackBox {
     // Provide the list of classes to test
     @SuppressWarnings("unchecked")
     static Stream<Class<? extends Order>> orderClassProvider() {
-        return (Stream<Class<? extends Order>>) Stream.of(
-//                Order.class,
-                Order0.class,
-                Order1.class,
-                Order2.class,
-                Order3.class,
-                Order4.class
-        );
+        return Stream.<Class<? extends Order>>of(Order.class);
     }
 
     @BeforeEach

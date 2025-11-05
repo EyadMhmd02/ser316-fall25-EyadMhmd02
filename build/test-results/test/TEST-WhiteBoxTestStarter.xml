@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="WhiteBoxTestStarter" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-05T16:46:09" hostname="DESKTOP-U5QG706" time="0.0">
+  <properties/>
+  <testcase name="testCanModifyOrder_AllConditionsFalse_ReturnsTrue()" classname="WhiteBoxTestStarter" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
