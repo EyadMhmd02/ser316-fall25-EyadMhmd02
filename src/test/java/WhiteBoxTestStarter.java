@@ -191,4 +191,235 @@ public class WhiteBoxTestStarter {
         assertFalse(result, "Should not allow modifications when totalPrice >= 100.0");
     }
 
+    // ========================================================================
+    // WHITE-BOX TESTS for calculateBillSplit() method
+    // ========================================================================
+    //
+    // CFG Analysis for calculateBillSplit():
+    // Nodes:
+    //   N1: if (numDiners <= 0 || tipPercent < 0 || tipPercent > 100)
+    //   N2: return null
+    //   N3: Calculate total, tip, grandTotal, perPerson
+    //   N4: for loop (i = 0 to numDiners - 1)
+    //   N5: for loop (i = 0 to numDiners - 1) - calculate sumSoFar
+    //   N6: Calculate last person's split
+    //   N7: return splits
+    //
+    // Branches to cover for 80% branch coverage:
+    //   B1: numDiners <= 0 -> return null
+    //   B2: tipPercent < 0 -> return null
+    //   B3: tipPercent > 100 -> return null
+    //   B4: numDiners > 0 && tipPercent >= 0 && tipPercent <= 100 -> continue
+    //   B5: Different numbers of diners (1, 2, 3+) to cover loop branches
+    //   B6: Edge cases: tipPercent = 0, tipPercent = 100, rounding scenarios
+    // ========================================================================
+
+    /**
+     * Test calculateBillSplit() - Invalid input: numDiners <= 0
+     * Covers branch: numDiners <= 0 -> return null
+     */
+    @Test
+    public void testCalculateBillSplit_InvalidNumDiners_ReturnsNull() {
+        // Arrange: Add some items to order
+        MenuItem burger = restaurant.getMenuItem("B001");
+        order.processOrderItem(burger, new ArrayList<>());
+        
+        // Act & Assert: Test numDiners = 0
+        assertNull(order.calculateBillSplit(0, 15.0), "Should return null for numDiners = 0");
+        
+        // Act & Assert: Test numDiners < 0
+        assertNull(order.calculateBillSplit(-1, 15.0), "Should return null for numDiners < 0");
+        assertNull(order.calculateBillSplit(-5, 15.0), "Should return null for numDiners < 0");
+    }
+
+    /**
+     * Test calculateBillSplit() - Invalid input: tipPercent < 0
+     * Covers branch: tipPercent < 0 -> return null
+     */
+    @Test
+    public void testCalculateBillSplit_NegativeTip_ReturnsNull() {
+        // Arrange: Add some items to order
+        MenuItem burger = restaurant.getMenuItem("B001");
+        order.processOrderItem(burger, new ArrayList<>());
+        
+        // Act & Assert
+        assertNull(order.calculateBillSplit(2, -1.0), "Should return null for tipPercent < 0");
+        assertNull(order.calculateBillSplit(2, -10.0), "Should return null for tipPercent < 0");
+    }
+
+    /**
+     * Test calculateBillSplit() - Invalid input: tipPercent > 100
+     * Covers branch: tipPercent > 100 -> return null
+     */
+    @Test
+    public void testCalculateBillSplit_TipOver100_ReturnsNull() {
+        // Arrange: Add some items to order
+        MenuItem burger = restaurant.getMenuItem("B001");
+        order.processOrderItem(burger, new ArrayList<>());
+        
+        // Act & Assert
+        assertNull(order.calculateBillSplit(2, 101.0), "Should return null for tipPercent > 100");
+        assertNull(order.calculateBillSplit(2, 150.0), "Should return null for tipPercent > 100");
+    }
+
+    /**
+     * Test calculateBillSplit() - Single diner (no loop iterations)
+     * Covers branch: numDiners = 1, loop doesn't execute
+     */
+    @Test
+    public void testCalculateBillSplit_SingleDiner_ReturnsCorrectAmount() {
+        // Arrange: Add items to order
+        MenuItem burger = restaurant.getMenuItem("B001");
+        order.processOrderItem(burger, new ArrayList<>());
+        double expectedTotal = order.getTotalPrice();
+        double tipPercent = 15.0;
+        double expectedTip = expectedTotal * (tipPercent / 100.0);
+        double expectedGrandTotal = expectedTotal + expectedTip;
+        
+        // Act
+        double[] splits = order.calculateBillSplit(1, tipPercent);
+        
+        // Assert
+        assertNotNull(splits, "Should not return null for valid input");
+        assertEquals(1, splits.length, "Should have 1 element for 1 diner");
+        assertEquals(expectedGrandTotal, splits[0], 0.01, "Single diner should pay the full amount with tip");
+    }
+
+    /**
+     * Test calculateBillSplit() - Two diners (one loop iteration)
+     * Covers branch: numDiners = 2, loop executes once
+     */
+    @Test
+    public void testCalculateBillSplit_TwoDiners_EqualSplit() {
+        // Arrange: Add items to order
+        MenuItem burger = restaurant.getMenuItem("B001");
+        order.processOrderItem(burger, new ArrayList<>());
+        double expectedTotal = order.getTotalPrice();
+        double tipPercent = 20.0;
+        double expectedTip = expectedTotal * (tipPercent / 100.0);
+        double expectedGrandTotal = expectedTotal + expectedTip;
+        double expectedPerPerson = expectedGrandTotal / 2.0;
+        
+        // Act
+        double[] splits = order.calculateBillSplit(2, tipPercent);
+        
+        // Assert
+        assertNotNull(splits, "Should not return null for valid input");
+        assertEquals(2, splits.length, "Should have 2 elements for 2 diners");
+        assertEquals(expectedPerPerson, splits[0], 0.01, "First person should pay half");
+        assertEquals(expectedPerPerson, splits[1], 0.01, "Second person should pay half");
+        // Verify total matches
+        assertEquals(expectedGrandTotal, splits[0] + splits[1], 0.01, "Total should match grand total");
+    }
+
+    /**
+     * Test calculateBillSplit() - Multiple diners (3+) with rounding
+     * Covers branch: numDiners > 2, loop executes multiple times, rounding handled
+     */
+    @Test
+    public void testCalculateBillSplit_MultipleDiners_HandlesRounding() {
+        // Arrange: Add items to create a total that will cause rounding issues
+        MenuItem burger = restaurant.getMenuItem("B001");
+        MenuItem pasta = restaurant.getMenuItem("P001");
+        order.processOrderItem(burger, new ArrayList<>());
+        order.processOrderItem(pasta, new ArrayList<>());
+        double expectedTotal = order.getTotalPrice();
+        double tipPercent = 18.0;
+        double expectedTip = expectedTotal * (tipPercent / 100.0);
+        double expectedGrandTotal = expectedTotal + expectedTip;
+        
+        // Act: Split between 3 diners
+        double[] splits = order.calculateBillSplit(3, tipPercent);
+        
+        // Assert
+        assertNotNull(splits, "Should not return null for valid input");
+        assertEquals(3, splits.length, "Should have 3 elements for 3 diners");
+        
+        // Verify first two people pay equal rounded amounts
+        assertEquals(splits[0], splits[1], 0.01, "First two people should pay equal amounts");
+        
+        // Verify total matches (last person gets remainder)
+        double sum = splits[0] + splits[1] + splits[2];
+        assertEquals(expectedGrandTotal, sum, 0.01, "Total of all splits should equal grand total");
+    }
+
+    /**
+     * Test calculateBillSplit() - Edge case: tipPercent = 0
+     * Covers branch: tipPercent = 0 (boundary condition)
+     */
+    @Test
+    public void testCalculateBillSplit_ZeroTip_NoTipAdded() {
+        // Arrange: Add items to order
+        MenuItem burger = restaurant.getMenuItem("B001");
+        order.processOrderItem(burger, new ArrayList<>());
+        double expectedTotal = order.getTotalPrice();
+        
+        // Act
+        double[] splits = order.calculateBillSplit(2, 0.0);
+        
+        // Assert
+        assertNotNull(splits, "Should not return null for valid input");
+        assertEquals(2, splits.length, "Should have 2 elements for 2 diners");
+        assertEquals(expectedTotal / 2.0, splits[0], 0.01, "Each person should pay half without tip");
+        assertEquals(expectedTotal / 2.0, splits[1], 0.01, "Each person should pay half without tip");
+        assertEquals(expectedTotal, splits[0] + splits[1], 0.01, "Total should equal order total (no tip)");
+    }
+
+    /**
+     * Test calculateBillSplit() - Edge case: tipPercent = 100
+     * Covers branch: tipPercent = 100 (boundary condition)
+     */
+    @Test
+    public void testCalculateBillSplit_Tip100Percent_DoublesTotal() {
+        // Arrange: Add items to order
+        MenuItem burger = restaurant.getMenuItem("B001");
+        order.processOrderItem(burger, new ArrayList<>());
+        double expectedTotal = order.getTotalPrice();
+        double expectedGrandTotal = expectedTotal * 2.0; // 100% tip doubles it
+        
+        // Act
+        double[] splits = order.calculateBillSplit(2, 100.0);
+        
+        // Assert
+        assertNotNull(splits, "Should not return null for valid input");
+        assertEquals(2, splits.length, "Should have 2 elements for 2 diners");
+        assertEquals(expectedGrandTotal / 2.0, splits[0], 0.01, "Each person should pay half with 100% tip");
+        assertEquals(expectedGrandTotal / 2.0, splits[1], 0.01, "Each person should pay half with 100% tip");
+        assertEquals(expectedGrandTotal, splits[0] + splits[1], 0.01, "Total should equal doubled amount");
+    }
+
+    /**
+     * Test calculateBillSplit() - Large number of diners
+     * Covers branch: numDiners > 3, multiple loop iterations
+     */
+    @Test
+    public void testCalculateBillSplit_LargeGroup_HandlesMultiplePeople() {
+        // Arrange: Add items to order
+        MenuItem burger = restaurant.getMenuItem("B001");
+        order.processOrderItem(burger, new ArrayList<>());
+        double expectedTotal = order.getTotalPrice();
+        double tipPercent = 15.0;
+        double expectedTip = expectedTotal * (tipPercent / 100.0);
+        double expectedGrandTotal = expectedTotal + expectedTip;
+        
+        // Act: Split between 5 diners
+        double[] splits = order.calculateBillSplit(5, tipPercent);
+        
+        // Assert
+        assertNotNull(splits, "Should not return null for valid input");
+        assertEquals(5, splits.length, "Should have 5 elements for 5 diners");
+        
+        // Verify first 4 people pay equal rounded amounts
+        for (int i = 0; i < 4; i++) {
+            assertEquals(splits[0], splits[i], 0.01, "First 4 people should pay equal amounts");
+        }
+        
+        // Verify total matches (last person gets remainder)
+        double sum = 0;
+        for (double split : splits) {
+            sum += split;
+        }
+        assertEquals(expectedGrandTotal, sum, 0.01, "Total of all splits should equal grand total");
+    }
+
 }
