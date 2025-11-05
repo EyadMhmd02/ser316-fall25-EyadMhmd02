@@ -265,6 +265,51 @@ public class Order {
      * @return status code indicating result
      */
     public double processOrderItem(MenuItem item, List<String> modifiers) {
+        // 1) Check if order status allows modifications (status < 3) -> 5.0
+        if (orderStatus >= 3) {
+            return 5.0;
+        }
+
+        // 2) Check if item is null -> 3.1
+        if (item == null) {
+            return 3.1;
+        }
+
+        // 3) Validate item ID format (alphanumeric, not null) -> 4.1
+        String itemId = item.getItemId();
+        if (itemId == null || !itemId.matches("^[A-Za-z0-9]+$")) {
+            return 4.1;
+        }
+
+        // 4) Check if item is available -> 3.0
+        if (!item.isAvailable()) {
+            return 3.0;
+        }
+
+        // Normalize modifiers: null treated as empty list
+        List<String> mods = (modifiers == null) ? new ArrayList<>() : new ArrayList<>(modifiers);
+
+        // 5) Check quantity limit (max 5 of same itemId) -> 2.0
+        if (getItemCountById(itemId) >= MAX_ITEM_QUANTITY) {
+            return 2.0;
+        }
+
+        // 6) Validate all modifiers are allowed for this item -> 2.1
+        for (String mod : mods) {
+            if (!item.isModifierAllowed(mod)) {
+                return 2.1;
+            }
+        }
+
+        // 7) Calculate total price with modifiers (use calculateModifierPrice helper)
+        double price = item.getBasePrice() + calculateModifierPrice(mods);
+
+        // 8) Add item and update total (skip promotions, compatibility, max total per simplified spec)
+        items.add(new OrderItem(item, mods, price));
+        totalPrice += price;
+        item.reduceStock();
+
+        // 9) Return 0.0
         return 0.0;
     }
 
