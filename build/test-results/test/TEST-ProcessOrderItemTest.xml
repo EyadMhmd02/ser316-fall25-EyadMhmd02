@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ProcessOrderItemTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2025-11-12T14:13:33" hostname="DESKTOP-U5QG706" time="0.275">
+  <properties/>
+  <testcase name="testOrderFinalized_Returns5_0()" classname="ProcessOrderItemTest" time="0.221"/>
+  <testcase name="testSuccess_NullModifiers_TreatedAsEmpty()" classname="ProcessOrderItemTest" time="0.006"/>
+  <testcase name="testPriceIncludesModifierCosts()" classname="ProcessOrderItemTest" time="0.001"/>
+  <testcase name="testQuantityLimit_MaxFive_Returns2_0OnSixth()" classname="ProcessOrderItemTest" time="0.002"/>
+  <testcase name="testSuccess_NoModifiers_Returns0_0_AddsItemAndUpdatesTotal()" classname="ProcessOrderItemTest" time="0.003"/>
+  <testcase name="testInvalidItemIdFormat_Returns4_1()" classname="ProcessOrderItemTest" time="0.001"/>
+  <testcase name="testInvalidModifier_Returns2_1_DoesNotAdd()" classname="ProcessOrderItemTest" time="0.001"/>
+  <testcase name="testUnavailableItem_Returns3_0()" classname="ProcessOrderItemTest" time="0.001"/>
+  <testcase name="testNullItem_Returns3_1()" classname="ProcessOrderItemTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
