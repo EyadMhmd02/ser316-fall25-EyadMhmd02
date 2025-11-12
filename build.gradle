@@ -10,9 +10,9 @@ buildscript {
 plugins {
     id 'java'
     id 'application'
-   // id 'checkstyle'
-   // id 'com.github.spotbugs' version '6.0.26'
-   // id 'jacoco'
+    id 'checkstyle'
+    id 'com.github.spotbugs' version '6.0.26'
+    id 'jacoco'
 }
 //
 //group = 'edu.asu.ser316'
@@ -36,7 +36,7 @@ dependencies {
 
 // Uncomment for Assignment 2+ to exclude BlackBoxGiven from gradle test
 // test {
-//     exclude '**/BlackBox.class'
+//     exclude '/BlackBox.class'
 // }
 
 test {
@@ -47,59 +47,86 @@ test {
         exceptionFormat "full"
     }
 
-   // finalizedBy jacocoTestReport
+    finalizedBy jacocoTestReport
+}
+
+// Ensure checkstyle and spotbugs run during build
+// Checkstyle tasks (checkstyleMain, checkstyleTest) are automatically part of the check lifecycle
+// SpotBugs tasks need to be explicitly added to the check lifecycle
+// Ensure SpotBugs runs after compilation
+check {
+    dependsOn spotbugsMain
+    dependsOn spotbugsTest
+}
+
+// Ensure SpotBugs tasks run after compilation
+spotbugsMain {
+    mustRunAfter checkstyleMain
+}
+
+spotbugsTest {
+    mustRunAfter checkstyleTest
 }
 
 // // Uncomment for Assignment 4 - Checkstyle configuration
-// checkstyle {
-//    toolVersion = '10.12.5'
-//    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-//    ignoreFailures = true
-//    showViolations = true
-// }
+checkstyle {
+    toolVersion = '10.12.5'
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    ignoreFailures = true
+    showViolations = true
+}
 
-// checkstyleMain {
-//    source = 'src/main/java'
-// }
+checkstyleMain {
+    reports {
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/checkstyle/main.html")
+        xml.required = false
+    }
+}
 
-// checkstyleTest {
-//    source = 'src/test/java'
-// }
+checkstyleTest {
+    reports {
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/checkstyle/test.html")
+        xml.required = false
+    }
+}
 
 // // Uncomment for Assignment 4 - SpotBugs configuration
-// spotbugs {
-//    ignoreFailures = true
-// }
+spotbugs {
+    ignoreFailures = true
+}
 
-// spotbugsMain {
-//    reports {
-//        html {
-//            required = true
-//            outputLocation = file("$buildDir/reports/spotbugs/main.html")
-//            setStylesheet('fancy-hist.xsl')
-//        }
-//    }
-// }
+spotbugsMain {
+    reports {
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/main.html")
+            setStylesheet('fancy-hist.xsl')
+        }
+    }
+}
 
-// spotbugsTest {
-//    reports {
-//        html {
-//            required = true
-//            outputLocation = file("$buildDir/reports/spotbugs/test.html")
-//            setStylesheet('fancy-hist.xsl')
-//        }
-//    }
-// }
+spotbugsTest {
+    reports {
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/test.html")
+            setStylesheet('fancy-hist.xsl')
+        }
+    }
+}
 
-// // JaCoCo for code coverage
-// jacoco {
-//    toolVersion = "0.8.12"
-// }
+// JaCoCo for code coverage
+jacoco {
+    toolVersion = "0.8.12"
+}
 
-// jacocoTestReport {
-//    reports {
-//        xml.required = true
-//        html.required = true
-//        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
-//    }
-// }
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test/html')
+    }
+}

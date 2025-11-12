@@ -63,7 +63,7 @@ public class MenuItem {
      * @return category
      */
     public String getCategory() {
-<span class="nc" id="L66">        return category;</span>
+<span class="fc" id="L66">        return category;</span>
     }
     
     /**
@@ -71,7 +71,7 @@ public class MenuItem {
      * @return true if available
      */
     public boolean isAvailable() {
-<span class="pc bpc" id="L74" title="1 of 4 branches missed.">        return available &amp;&amp; stockCount &gt; 0;</span>
+<span class="pc bpc" id="L74" title="2 of 4 branches missed.">        return available &amp;&amp; stockCount &gt; 0;</span>
     }
     
     /**
@@ -139,17 +139,17 @@ public class MenuItem {
      * Reduces stock by 1
      */
     public void reduceStock() {
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (stockCount &gt; 0) {</span>
-<span class="fc" id="L143">            stockCount--;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (stockCount &gt; 0) {</span>
+<span class="nc" id="L143">            stockCount--;</span>
         }
-<span class="fc" id="L145">    }</span>
+<span class="nc" id="L145">    }</span>
     
     /**
      * Sets stock count
      * @param count new stock count
      */
     public void setStockCount(int count) {
-<span class="fc" id="L152">        this.stockCount = count;</span>
-<span class="fc" id="L153">    }</span>
+<span class="nc" id="L152">        this.stockCount = count;</span>
+<span class="nc" id="L153">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
