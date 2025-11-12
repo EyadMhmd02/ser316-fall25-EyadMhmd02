@@ -880,6 +880,7 @@
          ]);
 
          var categories = new Array(
+<<<<<<< HEAD
                {id: "I18N", label: "Internationalization"}
          );
 
@@ -888,20 +889,44 @@
          );
 
          var patterns = new Array(
+=======
+               {id: "I18N", label: "Internationalization"},
+               {id: "MALICIOUS_CODE", label: "Malicious code vulnerability"}
+         );
+
+         var codes = new Array(
+               {id: "Dm", label: "Dubious method used"},
+               {id: "EI", label: "Method returning array may expose internal representation"},
+               {id: "EI2", label: "Storing reference to mutable object"}
+         );
+
+         var patterns = new Array(
+               {category: "MALICIOUS_CODE", code: "EI2", id: "EI_EXPOSE_REP2", label: "May expose internal representation by incorporating reference to mutable object"},
+               {category: "MALICIOUS_CODE", code: "EI", id: "EI_EXPOSE_REP", label: "May expose internal representation by returning reference to mutable object"},
+>>>>>>> Review
                {category: "I18N", code: "Dm", id: "DM_DEFAULT_ENCODING", label: "Reliance on default encoding"}
          );
 
          var classStats = new Array(
                {className: "Main", packageName: "", isInterface: "false", totalBugs: "1", bugsP1: "1", bugsP2: "0", bugsP3: "0", bugsP4: "0"},
                {className: "MenuItem", packageName: "", isInterface: "false", totalBugs: "0", bugsP1: "0", bugsP2: "0", bugsP3: "0", bugsP4: "0"},
+<<<<<<< HEAD
                {className: "Order", packageName: "", isInterface: "false", totalBugs: "0", bugsP1: "0", bugsP2: "0", bugsP3: "0", bugsP4: "0"},
                {className: "Order$OrderItem", packageName: "", isInterface: "false", totalBugs: "0", bugsP1: "0", bugsP2: "0", bugsP3: "0", bugsP4: "0"},
+=======
+               {className: "Order", packageName: "", isInterface: "false", totalBugs: "3", bugsP1: "0", bugsP2: "3", bugsP3: "0", bugsP4: "0"},
+               {className: "Order$OrderItem", packageName: "", isInterface: "false", totalBugs: "2", bugsP1: "0", bugsP2: "2", bugsP3: "0", bugsP4: "0"},
+>>>>>>> Review
                {className: "Restaurant", packageName: "", isInterface: "false", totalBugs: "0", bugsP1: "0", bugsP2: "0", bugsP3: "0", bugsP4: "0"},
                {className: "Table", packageName: "", isInterface: "false", totalBugs: "0", bugsP1: "0", bugsP2: "0", bugsP3: "0", bugsP4: "0"}
          );
 
          var packageStats = new Array(
+<<<<<<< HEAD
                {packageName: "", totalBugs: "1", bugsP1: "1", bugsP2: "0", bugsP3: "0", bugsP4: "0"}
+=======
+               {packageName: "", totalBugs: "6", bugsP1: "1", bugsP2: "5", bugsP3: "0", bugsP4: "0"}
+>>>>>>> Review
          );
 
          var bugs = new Array(
@@ -914,6 +939,59 @@
                   firstVersion: 0,
                   className: "Main",
                   packageName: "Main"
+<<<<<<< HEAD
+=======
+               },
+               {
+                  id: "5a9cc07fb01b33ee490498c4ea52cfbd-0",
+                  category: "MALICIOUS_CODE",
+                  code: "EI",
+                  pattern: "EI_EXPOSE_REP",
+                  priority: 2,
+                  firstVersion: 0,
+                  className: "Order",
+                  packageName: "Order"
+               },
+               {
+                  id: "3223dced0b394c252185a7ba4441eedc-0",
+                  category: "MALICIOUS_CODE",
+                  code: "EI2",
+                  pattern: "EI_EXPOSE_REP2",
+                  priority: 2,
+                  firstVersion: 0,
+                  className: "Order",
+                  packageName: "Order"
+               },
+               {
+                  id: "65ab9e665d9d152c350008b4c40b18ec-0",
+                  category: "MALICIOUS_CODE",
+                  code: "EI2",
+                  pattern: "EI_EXPOSE_REP2",
+                  priority: 2,
+                  firstVersion: 0,
+                  className: "Order",
+                  packageName: "Order"
+               },
+               {
+                  id: "dae91cd16b4d1e5642a4c61de9084276-0",
+                  category: "MALICIOUS_CODE",
+                  code: "EI",
+                  pattern: "EI_EXPOSE_REP",
+                  priority: 2,
+                  firstVersion: 0,
+                  className: "Order$OrderItem",
+                  packageName: "Order$OrderItem"
+               },
+               {
+                  id: "40e52f75d51acd4b16dcacca7859a5aa-0",
+                  category: "MALICIOUS_CODE",
+                  code: "EI2",
+                  pattern: "EI_EXPOSE_REP2",
+                  priority: 2,
+                  firstVersion: 0,
+                  className: "Order$OrderItem",
+                  packageName: "Order$OrderItem"
+>>>>>>> Review
                }
          );
 
@@ -1007,19 +1085,33 @@
                </tr>
                <tr>
                   <td class="summary-name">Overall (1 packages, 6 classes)</td>
+<<<<<<< HEAD
                   <td class="summary-size">520</td>
                   <td class="summary-priority-all">1</td>
                   <td class="summary-priority-1">1</td>
                   <td class="summary-priority-2">0</td>
+=======
+                  <td class="summary-size">454</td>
+                  <td class="summary-priority-all">6</td>
+                  <td class="summary-priority-1">1</td>
+                  <td class="summary-priority-2">5</td>
+>>>>>>> Review
                   <td class="summary-priority-3">0</td>
                   <td class="summary-priority-4">0</td>
                </tr>
                <tr>
                   <td class="summary-name"/>
+<<<<<<< HEAD
                   <td class="summary-size">520</td>
                   <td class="summary-priority-all">1</td>
                   <td class="summary-priority-1">1</td>
                   <td class="summary-priority-2">0</td>
+=======
+                  <td class="summary-size">454</td>
+                  <td class="summary-priority-all">6</td>
+                  <td class="summary-priority-1">1</td>
+                  <td class="summary-priority-2">5</td>
+>>>>>>> Review
                   <td class="summary-priority-3">0</td>
                   <td class="summary-priority-4">0</td>
                </tr>
@@ -1075,12 +1167,74 @@
             <div class="b-r">At Main.java:[line 11]</div>
             <div class="b-d">Found reliance on default encoding in Main.&lt;static initializer for Main&gt;(): new java.util.Scanner(InputStream)</div>
          </div>
+<<<<<<< HEAD
+=======
+         <div id="b-uid-5a9cc07fb01b33ee490498c4ea52cfbd-0" class="bug">
+            <div class="b-r">In class Order</div>
+            <div class="b-r">In method Order.getTable()</div>
+            <div class="b-r">Field Order.table</div>
+            <div class="b-r">At Order.java:[line 87]</div>
+            <div class="b-d">Order.getTable() may expose internal representation by returning table</div>
+         </div>
+         <div id="b-uid-3223dced0b394c252185a7ba4441eedc-0" class="bug">
+            <div class="b-r">In class Order</div>
+            <div class="b-r">In method new Order(Table, String)</div>
+            <div class="b-r">Field Order.table</div>
+            <div class="b-r">Local variable named table</div>
+            <div class="b-r">At Order.java:[line 45]</div>
+            <div class="b-d">new Order(Table, String) may expose internal representation by storing an externally mutable object into table</div>
+         </div>
+         <div id="b-uid-65ab9e665d9d152c350008b4c40b18ec-0" class="bug">
+            <div class="b-r">In class Order</div>
+            <div class="b-r">In method Order.initOrder(Table, String)</div>
+            <div class="b-r">Field Order.table</div>
+            <div class="b-r">Local variable named table</div>
+            <div class="b-r">At Order.java:[line 66]</div>
+            <div class="b-d">Order.initOrder(Table, String) may expose internal representation by storing an externally mutable object into table</div>
+         </div>
+         <div id="b-uid-dae91cd16b4d1e5642a4c61de9084276-0" class="bug">
+            <div class="b-r">In class Order$OrderItem</div>
+            <div class="b-r">In method Order$OrderItem.getMenuItem()</div>
+            <div class="b-r">Field Order$OrderItem.menuItem</div>
+            <div class="b-r">At Order.java:[line 425]</div>
+            <div class="b-d">Order$OrderItem.getMenuItem() may expose internal representation by returning menuItem</div>
+         </div>
+         <div id="b-uid-40e52f75d51acd4b16dcacca7859a5aa-0" class="bug">
+            <div class="b-r">In class Order$OrderItem</div>
+            <div class="b-r">In method new Order$OrderItem(MenuItem, List, double)</div>
+            <div class="b-r">Field Order$OrderItem.menuItem</div>
+            <div class="b-r">Local variable named menuItem</div>
+            <div class="b-r">At Order.java:[line 419]</div>
+            <div class="b-d">new Order$OrderItem(MenuItem, List, double) may expose internal representation by storing an externally mutable object into menuItem</div>
+         </div>
+>>>>>>> Review
          <div id="tip-DM_DEFAULT_ENCODING" class="tip">
             <p> Found a call to a method which will perform a byte to String (or String to byte) conversion,
             and will assume that the default platform encoding is suitable. This will cause the application
             behavior to vary between platforms. Use an alternative API and specify a charset name or Charset
             object explicitly.</p>
          </div>
+<<<<<<< HEAD
+=======
+         <div id="tip-EI_EXPOSE_REP" class="tip">
+            <p> Returning a reference to a mutable object value stored in one of the object's fields
+            exposes the internal representation of the object.&nbsp;
+            If instances
+            are accessed by untrusted code, and unchecked changes to
+            the mutable object would compromise security or other
+            important properties, you will need to do something different.
+            Returning a new copy of the object is better approach in many situations.</p>
+         </div>
+         <div id="tip-EI_EXPOSE_REP2" class="tip">
+            <p> This code stores a reference to an externally mutable object into the
+            internal representation of the object.&nbsp;
+            If instances
+            are accessed by untrusted code, and unchecked changes to
+            the mutable object would compromise security or other
+            important properties, you will need to do something different.
+            Storing a copy of the object is better approach in many situations.</p>
+         </div>
+>>>>>>> Review
       </div>
    </body>
 </html>

@@ -20,9 +20,8 @@ public class BlackBox {
     private Restaurant restaurant;
 
     // Provide the list of classes to test
-    @SuppressWarnings("unchecked")
     static Stream<Class<? extends Order>> orderClassProvider() {
-        return (Stream<Class<? extends Order>>) Stream.of(
+        return Stream.of(
 //                Order.class,
                 Order0.class,
                 Order1.class,

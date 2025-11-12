@@ -8,16 +8,16 @@ import java.util.Map;
  */
 public class Restaurant {
 
-    private Map<String, MenuItem> m;
-    public String n;
-    int x = 0;
+    private Map<String, MenuItem> menuById;
+    public String name;
+    int menuItemCount = 0;
     
     /**
      * Creates a new restaurant
      */
     public Restaurant(String name) {
-        this.n = name;
-        this.m = new HashMap<>();
+        this.name = name;
+        this.menuById = new HashMap<>();
         initializeMenu();
     }
     
@@ -31,31 +31,31 @@ public class Restaurant {
         burger.addAllowedModifier("EXTRA_ONIONS");
         burger.addAllowedModifier("NO_ONIONS");
         burger.addAllowedModifier("NO_TOMATOES");
-        m.put("B001", burger);
+        menuById.put("B001", burger);
         
         MenuItem salad = new MenuItem("S001", "Caesar Salad", 8.99, "APPETIZER");
         salad.addDietaryFlag("GLUTEN_FREE");
         salad.addAllowedModifier("EXTRA_CHEESE");
         salad.addAllowedModifier("NO_CHEESE");
         salad.addAllowedModifier("CROUTONS");
-        m.put("S001", salad);
+        menuById.put("S001", salad);
         
         MenuItem pasta = new MenuItem("P001", "Alfredo Pasta", 14.99, "ENTREE");
         pasta.addAllowedModifier("EXTRA_CHEESE");
         pasta.addAllowedModifier("NO_CHEESE");
-        m.put("P001", pasta);
+        menuById.put("P001", pasta);
         
         MenuItem wings = new MenuItem("W001", "Buffalo Wings", 9.99, "APPETIZER");
         wings.addAllowedModifier("EXTRA_ONIONS");
         wings.addAllowedModifier("NO_ONIONS");
-        m.put("W001", wings);
+        menuById.put("W001", wings);
         
         MenuItem soda = new MenuItem("D001", "Soft Drink", 2.99, "BEVERAGE");
-        m.put("D001", soda);
+        menuById.put("D001", soda);
         
         MenuItem cake = new MenuItem("C001", "Chocolate Cake", 6.99, "DESSERT");
         cake.addDietaryFlag("NUT_ALLERGY");
-        m.put("C001", cake);
+        menuById.put("C001", cake);
     }
     
     /**
@@ -64,7 +64,7 @@ public class Restaurant {
      * @return
      */
     public MenuItem getMenuItem(String itemId) {
-        return m.get(itemId);
+        return menuById.get(itemId);
     }
     
     /**
@@ -72,7 +72,7 @@ public class Restaurant {
      * @return list of all menu items
      */
     public List<MenuItem> getAllMenuItems() {
-        return new ArrayList<>(m.values());
+        return new ArrayList<>(menuById.values());
     }
     
     /**
@@ -80,20 +80,20 @@ public class Restaurant {
      * @param item
      */
     public void addMenuItem(MenuItem item) {
-        m.put(item.getItemId(), item);
-        x++;
+        menuById.put(item.getItemId(), item);
+        menuItemCount++;
     }
 
     private void removeMenuItem(String itemId) {
-        m.remove(itemId);
+        menuById.remove(itemId);
     }
     
     /**
      * Prints menu (poorly formatted)
      */
     public void printMenu() {
-        System.out.println("Menu for " + n);
-        for (MenuItem item : m.values()) {
+        System.out.println("Menu for " + name);
+        for (MenuItem item : menuById.values()) {
             System.out.println(item.getItemId() + " - " + item.getName() + " $" + item.getBasePrice());
         }
     }
@@ -114,9 +114,6 @@ public class Restaurant {
      * @return
      */
     public String formatPrice(double price) {
-        String result = "";
-        result = result + "$";
-        result = result + price;
-        return result;
+        return String.format("$%.2f", price);
     }
 }

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <testsuite name="WhiteBoxTestStarter" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-12T14:25:07" hostname="DESKTOP-U5QG706" time="0.002">
   <properties/>
   <testcase name="testCanModifyOrder_AllConditionsFalse_ReturnsTrue()" classname="WhiteBoxTestStarter" time="0.002"/>
+=======
+<testsuite name="WhiteBoxTestStarter" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-12T15:18:39" hostname="DESKTOP-U5QG706" time="0.001">
+  <properties/>
+  <testcase name="testCanModifyOrder_AllConditionsFalse_ReturnsTrue()" classname="WhiteBoxTestStarter" time="0.001"/>
+>>>>>>> Review
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

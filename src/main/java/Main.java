@@ -19,7 +19,7 @@ public class Main {
         table1.setServerName("Alice");
         
         // Create an order
-        Order1 order = new Order1(table1, "John Doe");
+        Order order = new Order(table1, "John Doe");
         
         System.out.println("Customer: " + order.getCustomerName());
         System.out.println("Table: " + table1.getTableNumber());
