@@ -1,3 +1,0 @@
-D:\eyad\ser316-fall25-EyadMhmd02\build\classes\java\test\BlackBox.class
-D:\eyad\ser316-fall25-EyadMhmd02\build\classes\java\test\ProcessOrderItemTest.class
-D:\eyad\ser316-fall25-EyadMhmd02\build\classes\java\test\WhiteBoxTestStarter.class

@@ -42,16 +42,19 @@ public class Order {
     private static final double ENTREE_DISCOUNT = 0.15;
 
     /** Status codes */
+    private static final int STATUS_READY = 2;
     private static final int FINALIZED_STATUS = 3;
     private static final int STATUS_DELIVERED = 3;
     private static final int STATUS_PAID = 4;
 
     /** Return codes */
-    private static final double RETURN_FINALIZED = 5.0;
+    private static final double RETURN_SUCCESS = 0.0;
+    private static final double RETURN_QUANTITY_LIMIT = 2.0;
+    private static final double RETURN_INVALID_MODIFIER = 2.1;
+    private static final double RETURN_UNAVAILABLE = 3.0;
     private static final double RETURN_NULL_ITEM = 3.1;
     private static final double RETURN_INVALID_ID = 4.1;
-    private static final double RETURN_UNAVAILABLE = 3.0;
-    private static final double RETURN_INVALID_MODIFIER = 2.1;
+    private static final double RETURN_FINALIZED = 5.0;
 
     /** Tracks applied promotions */
     protected List<String> appliedPromotions;
@@ -163,8 +166,8 @@ public class Order {
      */
     public int getItemCountById(String itemId) {
         int count = 0;
-        for (OrderItem oi : items) {
-            if (oi.getMenuItem().getItemId().equals(itemId)) {
+        for (OrderItem orderItem : items) {
+            if (orderItem.getMenuItem().getItemId().equals(itemId)) {
                 count++;
             }
         }
@@ -172,38 +175,32 @@ public class Order {
     }
 
     protected boolean areModifiersCompatible(List<String> modifiers) {
-        if (modifiers.contains("NO_CHEESE")) {
-            if (modifiers.contains("EXTRA_CHEESE")) {
-                return false;
-            } else {
-            }
+        if (modifiers.contains("NO_CHEESE") && modifiers.contains("EXTRA_CHEESE")) {
+            return false;
         }
-        if (modifiers.contains("NO_ONIONS")) {
-            if (modifiers.contains("EXTRA_ONIONS")) {
-                return false;
-            } else {
-            }
+        if (modifiers.contains("NO_ONIONS") && modifiers.contains("EXTRA_ONIONS")) {
+            return false;
         }
         return true;
     }
 
     protected double calculateModifierPrice(List<String> modifiers) {
-        double prc = 0.0;
-        for (String mod : modifiers) {
-            if (mod.equals("EXTRA_CHEESE") || mod.equals("EXTRA_ONIONS") || mod.equals("SOUR_CREAM")) {
-                prc += MODIFIER_PRICE_HIGH;
+        double modifierPrice = 0.0;
+        for (String modifier : modifiers) {
+            if (modifier.equals("EXTRA_CHEESE") || modifier.equals("EXTRA_ONIONS") || modifier.equals("SOUR_CREAM")) {
+                modifierPrice += MODIFIER_PRICE_HIGH;
             }
-            if (mod.equals("EXTRA_BREAD") || mod.equals("BUTTER")) {
-                prc += MODIFIER_PRICE_MED;
+            if (modifier.equals("EXTRA_BREAD") || modifier.equals("BUTTER")) {
+                modifierPrice += MODIFIER_PRICE_MED;
             }
-            if (mod.equals("CROUTONS")) {
-                prc += MODIFIER_PRICE_LOW;
+            if (modifier.equals("CROUTONS")) {
+                modifierPrice += MODIFIER_PRICE_LOW;
             }
-            if (mod.equals("NO_CHEESE") || mod.equals("NO_ONIONS") || mod.equals("NO_TOMATOES")) {
-                prc -= MODIFIER_DISCOUNT;
+            if (modifier.equals("NO_CHEESE") || modifier.equals("NO_ONIONS") || modifier.equals("NO_TOMATOES")) {
+                modifierPrice -= MODIFIER_DISCOUNT;
             }
         }
-        return prc;
+        return modifierPrice;
     }
 
     protected double calculatePromotion(MenuItem item, List<String> modifiers) {
@@ -328,7 +325,7 @@ public class Order {
 
         // 5) Check quantity limit (max 5 of same itemId) -> 2.0
         if (getItemCountById(itemId) >= MAX_ITEM_QUANTITY) {
-            return 2.0;
+            return RETURN_QUANTITY_LIMIT;
         }
 
         // 6) Validate all modifiers are allowed for this item -> 2.1
@@ -346,8 +343,8 @@ public class Order {
         totalPrice += price;
         item.reduceStock();
 
-        // 9) Return 0.0
-        return 0.0;
+        // 9) Return success code
+        return RETURN_SUCCESS;
     }
 
     /**
@@ -395,7 +392,7 @@ public class Order {
      * @return true if modifications allowed, false otherwise
      */
     public boolean canModifyOrder() {
-        if (orderStatus >= 2) {
+        if (orderStatus >= STATUS_READY) {
             return false;
         }
         if (items.size() >= MAX_TOTAL_ITEMS) {
@@ -451,32 +448,42 @@ public class Order {
      * @return formatted order summary string
      */
     public String generateOrderSummary(boolean incTotal, int disc, double tip) {
-        String str = "";
+        StringBuilder summary = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
-            str = str + items.get(i).getMenuItem().getName() + " - $" + items.get(i).getPrice() + "\n";
+            summary.append(items.get(i).getMenuItem().getName())
+                   .append(" - $")
+                   .append(items.get(i).getPrice())
+                   .append("\n");
         }
         if (incTotal) {
-            str = str + "Total: $" + totalPrice + "\n";
+            summary.append("Total: $").append(totalPrice).append("\n");
             if (disc == 1) {
-                str = str + "Discount: 10%\n";
+                summary.append("Discount: 10%\n");
             } else if (disc == 2) {
-                str = str + "Discount: 20%\n";
+                summary.append("Discount: 20%\n");
             } else if (disc == 3) {
-                str = str + "Discount: 30%\n";
+                summary.append("Discount: 30%\n");
             }
         }
         if (tip > 0.0) {
-            double tot = totalPrice + tip;
-            str = str + "With tip: $" + tot + "\n";
+            double totalWithTip = totalPrice + tip;
+            summary.append("With tip: $").append(totalWithTip).append("\n");
         }
-        return str;
+        return summary.toString();
     }
 
+    /**
+     * Processes payment for the order
+     * @param type payment type (CASH, CARD, CHECK)
+     * @param amount payment amount
+     * @param split whether to split payment
+     * @param numPeople number of people for split
+     */
     public void processPayment(String type, double amount, boolean split, int numPeople) {
         if (type.equals("CASH")) {
             if (split) {
-                double each = amount / numPeople;
-                System.out.println("Each person pays: " + each);
+                double amountPerPerson = amount / numPeople;
+                System.out.println("Each person pays: " + amountPerPerson);
             }
             System.out.println("Cash payment received");
         } else if (type.equals("CARD")) {
@@ -488,25 +495,9 @@ public class Order {
         } else if (type.equals("CHECK")) {
             System.out.println("Check payment");
         }
-        orderStatus = 4;
+        orderStatus = STATUS_PAID;
     }
 
-    private int getItemQuantity(String id) {
-        int qty = 0;
-        try {
-            for (OrderItem item : items) {
-                if (item.getMenuItem().getItemId().equals(id)) {
-                    qty++;
-                }
-            }
-        } catch (Exception e) {
-        }
-        return qty;
-    }
-
-    private boolean validateOrderItemsForProcessingAndEnsureAllConstraintsAreSatisfiedIncludingQuantityLimitsAndPriceThresholds(MenuItem item, List<String> mods) {
-        return true;
-    }
 
     /**
      * Inner class representing an item in an order with modifiers

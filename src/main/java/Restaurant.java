@@ -9,8 +9,8 @@ import java.util.Map;
 public class Restaurant {
 
     private Map<String, MenuItem> menuById;
-    public String name;
-    int menuItemCount = 0;
+    private String name;
+    private int menuItemCount = 0;
     
     /**
      * Creates a new restaurant
@@ -60,8 +60,8 @@ public class Restaurant {
     
     /**
      * Gets menu item by ID
-     * @param itemId
-     * @return
+     * @param itemId item identifier
+     * @return menu item or null if not found
      */
     public MenuItem getMenuItem(String itemId) {
         return menuById.get(itemId);
@@ -77,7 +77,7 @@ public class Restaurant {
     
     /**
      * Adds a new menu item
-     * @param item
+     * @param item menu item to add
      */
     public void addMenuItem(MenuItem item) {
         menuById.put(item.getItemId(), item);
@@ -92,7 +92,7 @@ public class Restaurant {
      * Prints menu (poorly formatted)
      */
     public void printMenu() {
-        System.out.println("Menu for " + name);
+        System.out.println("Menu for " + getName());
         for (MenuItem item : menuById.values()) {
             System.out.println(item.getItemId() + " - " + item.getName() + " $" + item.getBasePrice());
         }
@@ -100,9 +100,9 @@ public class Restaurant {
     
     /**
      * Calculate discount
-     * @param price
-     * @param discountPercent
-     * @return
+     * @param price original price
+     * @param discountPercent discount percentage (0-1)
+     * @return discounted price
      */
     public double calculateDiscount(double price, double discountPercent) {
         return price * discountPercent;
@@ -110,10 +110,18 @@ public class Restaurant {
 
     /**
      * Format price
-     * @param price
-     * @return
+     * @param price price to format
+     * @return formatted price string
      */
     public String formatPrice(double price) {
         return String.format("$%.2f", price);
+    }
+
+    /**
+     * Gets restaurant name
+     * @return restaurant name
+     */
+    public String getName() {
+        return name;
     }
 }
