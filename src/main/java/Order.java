@@ -61,8 +61,12 @@ public class Order {
      * @param table the table
      * @param customerName customer name
      */
+    // SER316 TASK 2 SPOTBUGS FIX
     public Order(Table table, String customerName) {
-        this.table = table;
+        Table copy = new Table(table.getTableNumber(), table.getPartySize());
+        copy.setServerName(table.getServerName());
+        copy.setOccupied(table.isOccupied());
+        this.table = copy;
         this.customerName = customerName;
         this.items = new ArrayList<>();
         this.totalPrice = 0.0;
@@ -87,8 +91,12 @@ public class Order {
      * @param table the table
      * @param customerName customer name
      */
+    // SER316 TASK 2 SPOTBUGS FIX
     public void initOrder(Table table, String customerName) {
-        this.table = table;
+        Table copy = new Table(table.getTableNumber(), table.getPartySize());
+        copy.setServerName(table.getServerName());
+        copy.setOccupied(table.isOccupied());
+        this.table = copy;
         this.customerName = customerName;
         this.items.clear();
         this.totalPrice = 0.0;
@@ -108,8 +116,12 @@ public class Order {
      * Gets the table
      * @return table object
      */
+    // SER316 TASK 2 SPOTBUGS FIX
     public Table getTable() {
-        return table;
+        Table copy = new Table(table.getTableNumber(), table.getPartySize());
+        copy.setServerName(table.getServerName());
+        copy.setOccupied(table.isOccupied());
+        return copy;
     }
 
     /**
@@ -497,14 +509,36 @@ public class Order {
         private List<String> modifiers;
         private double price;
 
+        // SER316 TASK 2 SPOTBUGS FIX
         public OrderItem(MenuItem menuItem, List<String> modifiers, double price) {
-            this.menuItem = menuItem;
+            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),
+                    menuItem.getBasePrice(), menuItem.getCategory());
+            copy.setStockCount(menuItem.getStockCount());
+            copy.setAvailable(menuItem.isAvailable());
+            for (String flag : menuItem.getDietaryFlags()) {
+                copy.addDietaryFlag(flag);
+            }
+            for (String modifier : menuItem.getAllowedModifiers()) {
+                copy.addAllowedModifier(modifier);
+            }
+            this.menuItem = copy;
             this.modifiers = new ArrayList<>(modifiers);
             this.price = price;
         }
 
+        // SER316 TASK 2 SPOTBUGS FIX: 
         public MenuItem getMenuItem() {
-            return menuItem;
+            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),
+                    menuItem.getBasePrice(), menuItem.getCategory());
+            copy.setStockCount(menuItem.getStockCount());
+            copy.setAvailable(menuItem.isAvailable());
+            for (String flag : menuItem.getDietaryFlags()) {
+                copy.addDietaryFlag(flag);
+            }
+            for (String modifier : menuItem.getAllowedModifiers()) {
+                copy.addAllowedModifier(modifier);
+            }
+            return copy;
         }
 
         public List<String> getModifiers() {
