@@ -443,6 +443,13 @@ public class Order {
         return splits;
     }
 
+    /**
+     * Generates a formatted order summary string
+     * @param incTotal whether to include total in summary
+     * @param disc discount code (1=10%, 2=20%, 3=30%)
+     * @param tip tip amount
+     * @return formatted order summary string
+     */
     public String generateOrderSummary(boolean incTotal, int disc, double tip) {
         String str = "";
         for (int i = 0; i < items.size(); i++) {

@@ -8,27 +8,16 @@ import java.util.Map;
  */
 public class Restaurant {
 
-<<<<<<< HEAD
-    private Map&lt;String, MenuItem&gt; m;
-    public String n;
-<span class="fc" id="L13">    int x = 0;</span>
-=======
     private Map&lt;String, MenuItem&gt; menuById;
     public String name;
 <span class="fc" id="L13">    int menuItemCount = 0;</span>
->>>>>>> Review
     
     /**
      * Creates a new restaurant
      */
 <span class="fc" id="L18">    public Restaurant(String name) {</span>
-<<<<<<< HEAD
-<span class="fc" id="L19">        this.n = name;</span>
-<span class="fc" id="L20">        this.m = new HashMap&lt;&gt;();</span>
-=======
 <span class="fc" id="L19">        this.name = name;</span>
 <span class="fc" id="L20">        this.menuById = new HashMap&lt;&gt;();</span>
->>>>>>> Review
 <span class="fc" id="L21">        initializeMenu();</span>
 <span class="fc" id="L22">    }</span>
     
@@ -42,45 +31,23 @@ public class Restaurant {
 <span class="fc" id="L31">        burger.addAllowedModifier(&quot;EXTRA_ONIONS&quot;);</span>
 <span class="fc" id="L32">        burger.addAllowedModifier(&quot;NO_ONIONS&quot;);</span>
 <span class="fc" id="L33">        burger.addAllowedModifier(&quot;NO_TOMATOES&quot;);</span>
-<<<<<<< HEAD
-<span class="fc" id="L34">        m.put(&quot;B001&quot;, burger);</span>
-=======
 <span class="fc" id="L34">        menuById.put(&quot;B001&quot;, burger);</span>
->>>>>>> Review
         
 <span class="fc" id="L36">        MenuItem salad = new MenuItem(&quot;S001&quot;, &quot;Caesar Salad&quot;, 8.99, &quot;APPETIZER&quot;);</span>
 <span class="fc" id="L37">        salad.addDietaryFlag(&quot;GLUTEN_FREE&quot;);</span>
 <span class="fc" id="L38">        salad.addAllowedModifier(&quot;EXTRA_CHEESE&quot;);</span>
 <span class="fc" id="L39">        salad.addAllowedModifier(&quot;NO_CHEESE&quot;);</span>
 <span class="fc" id="L40">        salad.addAllowedModifier(&quot;CROUTONS&quot;);</span>
-<<<<<<< HEAD
-<span class="fc" id="L41">        m.put(&quot;S001&quot;, salad);</span>
-=======
 <span class="fc" id="L41">        menuById.put(&quot;S001&quot;, salad);</span>
->>>>>>> Review
         
 <span class="fc" id="L43">        MenuItem pasta = new MenuItem(&quot;P001&quot;, &quot;Alfredo Pasta&quot;, 14.99, &quot;ENTREE&quot;);</span>
 <span class="fc" id="L44">        pasta.addAllowedModifier(&quot;EXTRA_CHEESE&quot;);</span>
 <span class="fc" id="L45">        pasta.addAllowedModifier(&quot;NO_CHEESE&quot;);</span>
-<<<<<<< HEAD
-<span class="fc" id="L46">        m.put(&quot;P001&quot;, pasta);</span>
-=======
 <span class="fc" id="L46">        menuById.put(&quot;P001&quot;, pasta);</span>
->>>>>>> Review
         
 <span class="fc" id="L48">        MenuItem wings = new MenuItem(&quot;W001&quot;, &quot;Buffalo Wings&quot;, 9.99, &quot;APPETIZER&quot;);</span>
 <span class="fc" id="L49">        wings.addAllowedModifier(&quot;EXTRA_ONIONS&quot;);</span>
 <span class="fc" id="L50">        wings.addAllowedModifier(&quot;NO_ONIONS&quot;);</span>
-<<<<<<< HEAD
-<span class="fc" id="L51">        m.put(&quot;W001&quot;, wings);</span>
-        
-<span class="fc" id="L53">        MenuItem soda = new MenuItem(&quot;D001&quot;, &quot;Soft Drink&quot;, 2.99, &quot;BEVERAGE&quot;);</span>
-<span class="fc" id="L54">        m.put(&quot;D001&quot;, soda);</span>
-        
-<span class="fc" id="L56">        MenuItem cake = new MenuItem(&quot;C001&quot;, &quot;Chocolate Cake&quot;, 6.99, &quot;DESSERT&quot;);</span>
-<span class="fc" id="L57">        cake.addDietaryFlag(&quot;NUT_ALLERGY&quot;);</span>
-<span class="fc" id="L58">        m.put(&quot;C001&quot;, cake);</span>
-=======
 <span class="fc" id="L51">        menuById.put(&quot;W001&quot;, wings);</span>
         
 <span class="fc" id="L53">        MenuItem soda = new MenuItem(&quot;D001&quot;, &quot;Soft Drink&quot;, 2.99, &quot;BEVERAGE&quot;);</span>
@@ -89,7 +56,6 @@ public class Restaurant {
 <span class="fc" id="L56">        MenuItem cake = new MenuItem(&quot;C001&quot;, &quot;Chocolate Cake&quot;, 6.99, &quot;DESSERT&quot;);</span>
 <span class="fc" id="L57">        cake.addDietaryFlag(&quot;NUT_ALLERGY&quot;);</span>
 <span class="fc" id="L58">        menuById.put(&quot;C001&quot;, cake);</span>
->>>>>>> Review
 <span class="fc" id="L59">    }</span>
     
     /**
@@ -98,11 +64,7 @@ public class Restaurant {
      * @return
      */
     public MenuItem getMenuItem(String itemId) {
-<<<<<<< HEAD
-<span class="fc" id="L67">        return m.get(itemId);</span>
-=======
 <span class="fc" id="L67">        return menuById.get(itemId);</span>
->>>>>>> Review
     }
     
     /**
@@ -110,11 +72,7 @@ public class Restaurant {
      * @return list of all menu items
      */
     public List&lt;MenuItem&gt; getAllMenuItems() {
-<<<<<<< HEAD
-<span class="nc" id="L75">        return new ArrayList&lt;&gt;(m.values());</span>
-=======
 <span class="nc" id="L75">        return new ArrayList&lt;&gt;(menuById.values());</span>
->>>>>>> Review
     }
     
     /**
@@ -122,34 +80,20 @@ public class Restaurant {
      * @param item
      */
     public void addMenuItem(MenuItem item) {
-<<<<<<< HEAD
-<span class="nc" id="L83">        m.put(item.getItemId(), item);</span>
-<span class="nc" id="L84">        x++;</span>
-<span class="nc" id="L85">    }</span>
-
-    private void removeMenuItem(String itemId) {
-<span class="nc" id="L88">        m.remove(itemId);</span>
-=======
 <span class="nc" id="L83">        menuById.put(item.getItemId(), item);</span>
 <span class="nc" id="L84">        menuItemCount++;</span>
 <span class="nc" id="L85">    }</span>
 
     private void removeMenuItem(String itemId) {
 <span class="nc" id="L88">        menuById.remove(itemId);</span>
->>>>>>> Review
 <span class="nc" id="L89">    }</span>
     
     /**
      * Prints menu (poorly formatted)
      */
     public void printMenu() {
-<<<<<<< HEAD
-<span class="nc" id="L95">        System.out.println(&quot;Menu for &quot; + n);</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">        for (MenuItem item : m.values()) {</span>
-=======
 <span class="nc" id="L95">        System.out.println(&quot;Menu for &quot; + name);</span>
 <span class="nc bnc" id="L96" title="All 2 branches missed.">        for (MenuItem item : menuById.values()) {</span>
->>>>>>> Review
 <span class="nc" id="L97">            System.out.println(item.getItemId() + &quot; - &quot; + item.getName() + &quot; $&quot; + item.getBasePrice());</span>
 <span class="nc" id="L98">        }</span>
 <span class="nc" id="L99">    }</span>
@@ -170,14 +114,7 @@ public class Restaurant {
      * @return
      */
     public String formatPrice(double price) {
-<<<<<<< HEAD
-<span class="nc" id="L117">        String result = &quot;&quot;;</span>
-<span class="nc" id="L118">        result = result + &quot;$&quot;;</span>
-<span class="nc" id="L119">        result = result + price;</span>
-<span class="nc" id="L120">        return result;</span>
-=======
 <span class="nc" id="L117">        return String.format(&quot;$%.2f&quot;, price);</span>
->>>>>>> Review
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

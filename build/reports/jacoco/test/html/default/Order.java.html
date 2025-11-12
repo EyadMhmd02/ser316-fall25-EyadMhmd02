@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ser316-fall25-EyadMhmd02</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-=======
-import java.util.*;
-import java.io.Serializable;
->>>>>>> Review
 
 /**
  * Represents a restaurant order for a table.
@@ -36,7 +31,6 @@ public class Order {
     /** Maximum total items in an order */
     private static final int MAX_TOTAL_ITEMS = 5;
 
-<<<<<<< HEAD
     /** Modifier prices */
     private static final double MODIFIER_PRICE_HIGH = 1.50;
     private static final double MODIFIER_PRICE_MED = 1.00;
@@ -59,8 +53,6 @@ public class Order {
     private static final double RETURN_UNAVAILABLE = 3.0;
     private static final double RETURN_INVALID_MODIFIER = 2.1;
 
-=======
->>>>>>> Review
     /** Tracks applied promotions */
     protected List&lt;String&gt; appliedPromotions;
 
@@ -69,7 +61,6 @@ public class Order {
      * @param table the table
      * @param customerName customer name
      */
-<<<<<<< HEAD
     // SER316 TASK 2 SPOTBUGS FIX
 <span class="nc" id="L65">    public Order(Table table, String customerName) {</span>
 <span class="nc" id="L66">        Table copy = new Table(table.getTableNumber(), table.getPartySize());</span>
@@ -82,21 +73,10 @@ public class Order {
 <span class="nc" id="L73">        this.orderStatus = 0;</span>
 <span class="nc" id="L74">        this.appliedPromotions = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L75">    }</span>
-=======
-<span class="nc" id="L44">    public Order(Table table, String customerName) {</span>
-<span class="nc" id="L45">        this.table = table;</span>
-<span class="nc" id="L46">        this.customerName = customerName;</span>
-<span class="nc" id="L47">        this.items = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L48">        this.totalPrice = 0.0;</span>
-<span class="nc" id="L49">        this.orderStatus = 0;</span>
-<span class="nc" id="L50">        this.appliedPromotions = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L51">    }</span>
->>>>>>> Review
 
     /**
      * Default constructor for testing
      */
-<<<<<<< HEAD
 <span class="fc" id="L80">    public Order() {</span>
 <span class="fc" id="L81">        this.table = new Table(1, 1);</span>
 <span class="fc" id="L82">        this.customerName = &quot;&quot;;</span>
@@ -123,53 +103,25 @@ public class Order {
 <span class="fc" id="L103">        this.orderStatus = 0;</span>
 <span class="fc" id="L104">        this.appliedPromotions.clear();</span>
 <span class="fc" id="L105">    }</span>
-=======
-<span class="fc" id="L56">    public Order() {</span>
-<span class="fc" id="L57">        this.table = new Table(1, 1);</span>
-<span class="fc" id="L58">        this.customerName = &quot;&quot;;</span>
-<span class="fc" id="L59">        this.items = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L60">        this.totalPrice = 0.0;</span>
-<span class="fc" id="L61">        this.orderStatus = 0;</span>
-<span class="fc" id="L62">        this.appliedPromotions = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L63">    }</span>
-
-    public void initOrder(Table table, String customerName) {
-<span class="fc" id="L66">        this.table = table;</span>
-<span class="fc" id="L67">        this.customerName = customerName;</span>
-<span class="fc" id="L68">        this.items.clear();</span>
-<span class="fc" id="L69">        this.totalPrice = 0.0;</span>
-<span class="fc" id="L70">        this.orderStatus = 0;</span>
-<span class="fc" id="L71">        this.appliedPromotions.clear();</span>
-<span class="fc" id="L72">    }</span>
->>>>>>> Review
 
     /**
      * Gets the customer name
      * @return customer name
      */
     public String getCustomerName() {
-<<<<<<< HEAD
 <span class="nc" id="L112">        return customerName;</span>
-=======
-<span class="nc" id="L79">        return customerName;</span>
->>>>>>> Review
     }
 
     /**
      * Gets the table
      * @return table object
      */
-<<<<<<< HEAD
     // SER316 TASK 2 SPOTBUGS FIX
     public Table getTable() {
 <span class="nc" id="L121">        Table copy = new Table(table.getTableNumber(), table.getPartySize());</span>
 <span class="nc" id="L122">        copy.setServerName(table.getServerName());</span>
 <span class="nc" id="L123">        copy.setOccupied(table.isOccupied());</span>
 <span class="nc" id="L124">        return copy;</span>
-=======
-    public Table getTable() {
-<span class="nc" id="L87">        return table;</span>
->>>>>>> Review
     }
 
     /**
@@ -177,11 +129,7 @@ public class Order {
      * @return status code
      */
     public int getOrderStatus() {
-<<<<<<< HEAD
 <span class="fc" id="L132">        return orderStatus;</span>
-=======
-<span class="fc" id="L95">        return orderStatus;</span>
->>>>>>> Review
     }
 
     /**
@@ -189,24 +137,15 @@ public class Order {
      * @param status new status
      */
     public void setOrderStatus(int status) {
-<<<<<<< HEAD
 <span class="fc" id="L140">        this.orderStatus = status;</span>
 <span class="fc" id="L141">    }</span>
-=======
-<span class="nc" id="L103">        this.orderStatus = status;</span>
-<span class="nc" id="L104">    }</span>
->>>>>>> Review
 
     /**
      * Gets current total price
      * @return total price
      */
     public double getTotalPrice() {
-<<<<<<< HEAD
 <span class="fc" id="L148">        return Math.round(totalPrice * 100.0) / 100.0;</span>
-=======
-<span class="fc" id="L111">        return Math.round(totalPrice * 100.0) / 100.0;</span>
->>>>>>> Review
     }
 
     /**
@@ -214,11 +153,7 @@ public class Order {
      * @return list of order items
      */
     public List&lt;OrderItem&gt; getItems() {
-<<<<<<< HEAD
 <span class="fc" id="L156">        return new ArrayList&lt;&gt;(items);</span>
-=======
-<span class="fc" id="L119">        return new ArrayList&lt;&gt;(items);</span>
->>>>>>> Review
     }
 
     /**
@@ -227,7 +162,6 @@ public class Order {
      * @return count
      */
     public int getItemCountById(String itemId) {
-<<<<<<< HEAD
 <span class="fc" id="L165">        int count = 0;</span>
 <span class="fc bfc" id="L166" title="All 2 branches covered.">        for (OrderItem oi : items) {</span>
 <span class="fc bfc" id="L167" title="All 2 branches covered.">            if (oi.getMenuItem().getItemId().equals(itemId)) {</span>
@@ -238,19 +172,19 @@ public class Order {
     }
 
     protected boolean areModifiersCompatible(List&lt;String&gt; modifiers) {
-<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (modifiers.contains(&quot;NO_CHEESE&quot;)) {</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        if (modifiers.contains(&quot;NO_CHEESE&quot;)) {</span>
 <span class="nc bnc" id="L176" title="All 2 branches missed.">            if (modifiers.contains(&quot;EXTRA_CHEESE&quot;)) {</span>
 <span class="nc" id="L177">                return false;</span>
             } else {
             }
         }
-<span class="nc bnc" id="L181" title="All 2 branches missed.">        if (modifiers.contains(&quot;NO_ONIONS&quot;)) {</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        if (modifiers.contains(&quot;NO_ONIONS&quot;)) {</span>
 <span class="nc bnc" id="L182" title="All 2 branches missed.">            if (modifiers.contains(&quot;EXTRA_ONIONS&quot;)) {</span>
 <span class="nc" id="L183">                return false;</span>
             } else {
             }
         }
-<span class="nc" id="L187">        return true;</span>
+<span class="fc" id="L187">        return true;</span>
     }
 
     protected double calculateModifierPrice(List&lt;String&gt; modifiers) {
@@ -273,79 +207,19 @@ public class Order {
     }
 
     protected double calculatePromotion(MenuItem item, List&lt;String&gt; modifiers) {
-<span class="nc" id="L210">        double discount = 0.0;</span>
+<span class="fc" id="L210">        double discount = 0.0;</span>
 
-<span class="nc bnc" id="L212" title="All 2 branches missed.">        if (item.getCategory().equals(&quot;APPETIZER&quot;)) {</span>
-<span class="nc" id="L213">            discount = APPETIZER_DISCOUNT;</span>
-<span class="nc" id="L214">            appliedPromotions.add(&quot;APPETIZER_SPECIAL_20&quot;);</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">        if (item.getCategory().equals(&quot;APPETIZER&quot;)) {</span>
+<span class="fc" id="L213">            discount = APPETIZER_DISCOUNT;</span>
+<span class="fc" id="L214">            appliedPromotions.add(&quot;APPETIZER_SPECIAL_20&quot;);</span>
         }
 
-<span class="nc bnc" id="L217" title="All 4 branches missed.">        if (item.getCategory().equals(&quot;ENTREE&quot;) &amp;&amp; modifiers.size() &gt;= 2) {</span>
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">        if (item.getCategory().equals(&quot;ENTREE&quot;) &amp;&amp; modifiers.size() &gt;= 2) {</span>
 <span class="nc" id="L218">            discount = Math.max(discount, ENTREE_DISCOUNT);</span>
 <span class="nc" id="L219">            appliedPromotions.add(&quot;PREMIUM_ENTREE_15&quot;);</span>
         }
 
-<span class="nc" id="L222">        return discount;</span>
-=======
-<span class="fc" id="L128">        int count = 0;</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">        for (OrderItem oi : items) {</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">            if (oi.getMenuItem().getItemId().equals(itemId)) {</span>
-<span class="fc" id="L131">                count++;</span>
-            }
-<span class="fc" id="L133">        }</span>
-<span class="fc" id="L134">        return count;</span>
-    }
-
-    protected boolean areModifiersCompatible(List&lt;String&gt; modifiers) {
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (modifiers.contains(&quot;NO_CHEESE&quot;)) {</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">            if (modifiers.contains(&quot;EXTRA_CHEESE&quot;)) {</span>
-<span class="nc" id="L140">                return false;</span>
-            } else {
-            }
-        }
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">        if (modifiers.contains(&quot;NO_ONIONS&quot;)) {</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">            if (modifiers.contains(&quot;EXTRA_ONIONS&quot;)) {</span>
-<span class="nc" id="L146">                return false;</span>
-            } else {
-            }
-        }
-<span class="fc" id="L150">        return true;</span>
-    }
-
-    protected double calculateModifierPrice(List&lt;String&gt; modifiers) {
-<span class="fc" id="L154">        double prc = 0.0;</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        for (String mod : modifiers) {</span>
-<span class="nc bnc" id="L156" title="All 6 branches missed.">            if(mod.equals(&quot;EXTRA_CHEESE&quot;)||mod.equals(&quot;EXTRA_ONIONS&quot;)||mod.equals(&quot;SOUR_CREAM&quot;)){</span>
-<span class="nc" id="L157">                prc+=1.50;</span>
-            }
-<span class="nc bnc" id="L159" title="All 4 branches missed.">            if(mod.equals(&quot;EXTRA_BREAD&quot;)||mod.equals(&quot;BUTTER&quot;)){</span>
-<span class="nc" id="L160">                prc+=1.00;</span>
-            }
-<span class="nc bnc" id="L162" title="All 2 branches missed.">            if(mod.equals(&quot;CROUTONS&quot;)){</span>
-<span class="nc" id="L163">                prc+=0.75;</span>
-            }
-<span class="nc bnc" id="L165" title="All 6 branches missed.">            if(mod.equals(&quot;NO_CHEESE&quot;)||mod.equals(&quot;NO_ONIONS&quot;)||mod.equals(&quot;NO_TOMATOES&quot;)){</span>
-<span class="nc" id="L166">                prc-=0.50;</span>
-            }
-<span class="nc" id="L168">        }</span>
-<span class="fc" id="L169">        return prc;</span>
-    }
-
-    protected double calculatePromotion(MenuItem item, List&lt;String&gt; modifiers) {
-<span class="fc" id="L173">        double discount = 0.0;</span>
-
-<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (item.getCategory().equals(&quot;APPETIZER&quot;)) {</span>
-<span class="fc" id="L176">            discount = 0.20;</span>
-<span class="fc" id="L177">            appliedPromotions.add(&quot;APPETIZER_SPECIAL_20&quot;);</span>
-        }
-
-<span class="pc bpc" id="L180" title="1 of 4 branches missed.">        if (item.getCategory().equals(&quot;ENTREE&quot;) &amp;&amp; modifiers.size() &gt;= 2) {</span>
-<span class="nc" id="L181">            discount = Math.max(discount, 0.15);</span>
-<span class="nc" id="L182">            appliedPromotions.add(&quot;PREMIUM_ENTREE_15&quot;);</span>
-        }
-
-<span class="fc" id="L185">        return discount;</span>
->>>>>>> Review
+<span class="fc" id="L222">        return discount;</span>
     }
 
     /**
@@ -428,7 +302,6 @@ public class Order {
      * @return status code indicating result
      */
     public double processOrderItem(MenuItem item, List&lt;String&gt; modifiers) {
-<<<<<<< HEAD
         // 1) Check if order status allows modifications (status &lt; 3) -&gt; 5.0
 <span class="fc bfc" id="L306" title="All 2 branches covered.">        if (orderStatus &gt;= FINALIZED_STATUS) {</span>
 <span class="fc" id="L307">            return RETURN_FINALIZED;</span>
@@ -508,30 +381,6 @@ public class Order {
 <span class="nc" id="L381">            orderStatus = STATUS_PAID;</span>
         }
 <span class="nc" id="L383">    }</span>
-=======
-<span class="nc" id="L268">        return 0.0;</span>
-    }
-
-    public void submitOrder() {
-<span class="nc" id="L272">        orderStatus = 1;</span>
-<span class="nc" id="L273">    }</span>
-
-    public void markReady() {
-<span class="nc bnc" id="L276" title="All 2 branches missed.">        if (orderStatus &lt; 2) {</span>
-<span class="nc" id="L277">            orderStatus = 2;</span>
-        }
-<span class="nc" id="L279">    }</span>
-
-    public void markDelivered() {
-<span class="nc" id="L282">        orderStatus = 3;</span>
-<span class="nc" id="L283">    }</span>
-
-    public void markPaid() {
-<span class="nc bnc" id="L286" title="All 2 branches missed.">        if (orderStatus &gt;= 3) {</span>
-<span class="nc" id="L287">            orderStatus = 4;</span>
-        }
-<span class="nc" id="L289">    }</span>
->>>>>>> Review
 
     /**
      * Checks if order can accept modifications based on item count, status, and total.
@@ -546,7 +395,6 @@ public class Order {
      * @return true if modifications allowed, false otherwise
      */
     public boolean canModifyOrder() {
-<<<<<<< HEAD
 <span class="fc bfc" id="L398" title="All 2 branches covered.">        if (orderStatus &gt;= 2) {</span>
 <span class="fc" id="L399">            return false;</span>
         }
@@ -557,18 +405,6 @@ public class Order {
 <span class="fc" id="L405">            return false;</span>
         }
 <span class="fc" id="L407">        return true;</span>
-=======
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">        if (orderStatus &gt;= 2) {</span>
-<span class="nc" id="L305">            return false;</span>
-        }
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">        if (items.size() &gt;= MAX_TOTAL_ITEMS) {</span>
-<span class="nc" id="L308">            return false;</span>
-        }
-<span class="pc bpc" id="L310" title="1 of 2 branches missed.">        if (totalPrice &gt;= MAX_ORDER_TOTAL) {</span>
-<span class="nc" id="L311">            return false;</span>
-        }
-<span class="fc" id="L313">        return true;</span>
->>>>>>> Review
     }
 
     /**
@@ -581,7 +417,6 @@ public class Order {
      * @return array of amounts each diner pays, or null if invalid parameters
      */
     public double[] calculateBillSplit(int numDiners, double tipPercent) {
-<<<<<<< HEAD
 <span class="fc bfc" id="L420" title="All 6 branches covered.">        if (numDiners &lt;= 0 || tipPercent &lt; 0 || tipPercent &gt; 100) {</span>
 <span class="fc" id="L421">            return null;</span>
         }
@@ -608,146 +443,69 @@ public class Order {
 <span class="fc" id="L443">        return splits;</span>
     }
 
+    /**
+     * Generates a formatted order summary string
+     * @param incTotal whether to include total in summary
+     * @param disc discount code (1=10%, 2=20%, 3=30%)
+     * @param tip tip amount
+     * @return formatted order summary string
+     */
     public String generateOrderSummary(boolean incTotal, int disc, double tip) {
-<span class="nc" id="L447">        String str = &quot;&quot;;</span>
-<span class="nc bnc" id="L448" title="All 2 branches missed.">        for (int i = 0; i &lt; items.size(); i++) {</span>
-<span class="nc" id="L449">            str = str + items.get(i).getMenuItem().getName() + &quot; - $&quot; + items.get(i).getPrice() + &quot;\n&quot;;</span>
+<span class="nc" id="L454">        String str = &quot;&quot;;</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">        for (int i = 0; i &lt; items.size(); i++) {</span>
+<span class="nc" id="L456">            str = str + items.get(i).getMenuItem().getName() + &quot; - $&quot; + items.get(i).getPrice() + &quot;\n&quot;;</span>
         }
-<span class="nc bnc" id="L451" title="All 2 branches missed.">        if (incTotal) {</span>
-<span class="nc" id="L452">            str = str + &quot;Total: $&quot; + totalPrice + &quot;\n&quot;;</span>
-<span class="nc bnc" id="L453" title="All 2 branches missed.">            if (disc == 1) {</span>
-<span class="nc" id="L454">                str = str + &quot;Discount: 10%\n&quot;;</span>
-<span class="nc bnc" id="L455" title="All 2 branches missed.">            } else if (disc == 2) {</span>
-<span class="nc" id="L456">                str = str + &quot;Discount: 20%\n&quot;;</span>
-<span class="nc bnc" id="L457" title="All 2 branches missed.">            } else if (disc == 3) {</span>
-<span class="nc" id="L458">                str = str + &quot;Discount: 30%\n&quot;;</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">        if (incTotal) {</span>
+<span class="nc" id="L459">            str = str + &quot;Total: $&quot; + totalPrice + &quot;\n&quot;;</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">            if (disc == 1) {</span>
+<span class="nc" id="L461">                str = str + &quot;Discount: 10%\n&quot;;</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">            } else if (disc == 2) {</span>
+<span class="nc" id="L463">                str = str + &quot;Discount: 20%\n&quot;;</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">            } else if (disc == 3) {</span>
+<span class="nc" id="L465">                str = str + &quot;Discount: 30%\n&quot;;</span>
             }
         }
-<span class="nc bnc" id="L461" title="All 2 branches missed.">        if (tip &gt; 0.0) {</span>
-<span class="nc" id="L462">            double tot = totalPrice + tip;</span>
-<span class="nc" id="L463">            str = str + &quot;With tip: $&quot; + tot + &quot;\n&quot;;</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">        if (tip &gt; 0.0) {</span>
+<span class="nc" id="L469">            double tot = totalPrice + tip;</span>
+<span class="nc" id="L470">            str = str + &quot;With tip: $&quot; + tot + &quot;\n&quot;;</span>
         }
-<span class="nc" id="L465">        return str;</span>
+<span class="nc" id="L472">        return str;</span>
     }
 
     public void processPayment(String type, double amount, boolean split, int numPeople) {
-<span class="nc bnc" id="L469" title="All 2 branches missed.">        if (type.equals(&quot;CASH&quot;)) {</span>
-<span class="nc bnc" id="L470" title="All 2 branches missed.">            if (split) {</span>
-<span class="nc" id="L471">                double each = amount / numPeople;</span>
-<span class="nc" id="L472">                System.out.println(&quot;Each person pays: &quot; + each);</span>
-            }
-<span class="nc" id="L474">            System.out.println(&quot;Cash payment received&quot;);</span>
-<span class="nc bnc" id="L475" title="All 2 branches missed.">        } else if (type.equals(&quot;CARD&quot;)) {</span>
-<span class="nc" id="L476">            System.out.println(&quot;Processing card&quot;);</span>
+<span class="nc bnc" id="L476" title="All 2 branches missed.">        if (type.equals(&quot;CASH&quot;)) {</span>
 <span class="nc bnc" id="L477" title="All 2 branches missed.">            if (split) {</span>
-<span class="nc" id="L478">                System.out.println(&quot;Splitting between &quot; + numPeople);</span>
+<span class="nc" id="L478">                double each = amount / numPeople;</span>
+<span class="nc" id="L479">                System.out.println(&quot;Each person pays: &quot; + each);</span>
             }
-<span class="nc" id="L480">            System.out.println(&quot;Card payment received&quot;);</span>
-<span class="nc bnc" id="L481" title="All 2 branches missed.">        } else if (type.equals(&quot;CHECK&quot;)) {</span>
-<span class="nc" id="L482">            System.out.println(&quot;Check payment&quot;);</span>
+<span class="nc" id="L481">            System.out.println(&quot;Cash payment received&quot;);</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">        } else if (type.equals(&quot;CARD&quot;)) {</span>
+<span class="nc" id="L483">            System.out.println(&quot;Processing card&quot;);</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">            if (split) {</span>
+<span class="nc" id="L485">                System.out.println(&quot;Splitting between &quot; + numPeople);</span>
+            }
+<span class="nc" id="L487">            System.out.println(&quot;Card payment received&quot;);</span>
+<span class="nc bnc" id="L488" title="All 2 branches missed.">        } else if (type.equals(&quot;CHECK&quot;)) {</span>
+<span class="nc" id="L489">            System.out.println(&quot;Check payment&quot;);</span>
         }
-<span class="nc" id="L484">        orderStatus = 4;</span>
-<span class="nc" id="L485">    }</span>
+<span class="nc" id="L491">        orderStatus = 4;</span>
+<span class="nc" id="L492">    }</span>
 
     private int getItemQuantity(String id) {
-<span class="nc" id="L488">        int qty = 0;</span>
+<span class="nc" id="L495">        int qty = 0;</span>
         try {
-<span class="nc bnc" id="L490" title="All 2 branches missed.">            for (OrderItem item : items) {</span>
-<span class="nc bnc" id="L491" title="All 2 branches missed.">                if (item.getMenuItem().getItemId().equals(id)) {</span>
-<span class="nc" id="L492">                    qty++;</span>
+<span class="nc bnc" id="L497" title="All 2 branches missed.">            for (OrderItem item : items) {</span>
+<span class="nc bnc" id="L498" title="All 2 branches missed.">                if (item.getMenuItem().getItemId().equals(id)) {</span>
+<span class="nc" id="L499">                    qty++;</span>
                 }
-<span class="nc" id="L494">            }</span>
-<span class="nc" id="L495">        } catch (Exception e) {</span>
-<span class="nc" id="L496">        }</span>
-<span class="nc" id="L497">        return qty;</span>
+<span class="nc" id="L501">            }</span>
+<span class="nc" id="L502">        } catch (Exception e) {</span>
+<span class="nc" id="L503">        }</span>
+<span class="nc" id="L504">        return qty;</span>
     }
 
     private boolean validateOrderItemsForProcessingAndEnsureAllConstraintsAreSatisfiedIncludingQuantityLimitsAndPriceThresholds(MenuItem item, List&lt;String&gt; mods) {
-<span class="nc" id="L501">        return true;</span>
-=======
-<span class="nc bnc" id="L326" title="All 6 branches missed.">        if (numDiners &lt;= 0 || tipPercent &lt; 0 || tipPercent &gt; 100) {</span>
-<span class="nc" id="L327">            return null;</span>
-        }
-
-<span class="nc" id="L330">        double total = getTotalPrice();</span>
-<span class="nc" id="L331">        double tipAmount = total * (tipPercent / 100.0);</span>
-<span class="nc" id="L332">        double grandTotal = total + tipAmount;</span>
-<span class="nc" id="L333">        double perPerson = grandTotal / numDiners;</span>
-
-<span class="nc" id="L335">        double[] splits = new double[numDiners];</span>
-
-        // Calculate equal split for all but last person
-<span class="nc bnc" id="L338" title="All 2 branches missed.">        for (int i = 0; i &lt; numDiners - 1; i++) {</span>
-<span class="nc" id="L339">            splits[i] = Math.round(perPerson * 100.0) / 100.0;</span>
-        }
-
-        // Last person gets remainder to handle rounding
-<span class="nc" id="L343">        double sumSoFar = 0;</span>
-<span class="nc bnc" id="L344" title="All 2 branches missed.">        for (int i = 0; i &lt; numDiners - 1; i++) {</span>
-<span class="nc" id="L345">            sumSoFar += splits[i];</span>
-        }
-<span class="nc" id="L347">        splits[numDiners - 1] = Math.round((grandTotal - sumSoFar) * 100.0) / 100.0;</span>
-
-<span class="nc" id="L349">        return splits;</span>
-    }
-
-    public String generateOrderSummary(boolean incTotal, int disc, double tip) {
-<span class="nc" id="L353">        String str = &quot;&quot;;</span>
-<span class="nc bnc" id="L354" title="All 2 branches missed.">        for (int i = 0; i &lt; items.size(); i++) {</span>
-<span class="nc" id="L355">            str = str + items.get(i).getMenuItem().getName() + &quot; - $&quot; + items.get(i).getPrice() + &quot;\n&quot;;</span>
-        }
-<span class="nc bnc" id="L357" title="All 2 branches missed.">        if (incTotal) {</span>
-<span class="nc" id="L358">            str = str + &quot;Total: $&quot; + totalPrice + &quot;\n&quot;;</span>
-<span class="nc bnc" id="L359" title="All 2 branches missed.">            if (disc == 1) {</span>
-<span class="nc" id="L360">                str = str + &quot;Discount: 10%\n&quot;;</span>
-<span class="nc bnc" id="L361" title="All 2 branches missed.">            } else if (disc == 2) {</span>
-<span class="nc" id="L362">                str = str + &quot;Discount: 20%\n&quot;;</span>
-<span class="nc bnc" id="L363" title="All 2 branches missed.">            } else if (disc == 3) {</span>
-<span class="nc" id="L364">                str = str + &quot;Discount: 30%\n&quot;;</span>
-            }
-        }
-<span class="nc bnc" id="L367" title="All 2 branches missed.">        if (tip &gt; 0.0) {</span>
-<span class="nc" id="L368">            double tot = totalPrice + tip;</span>
-<span class="nc" id="L369">            str = str + &quot;With tip: $&quot; + tot + &quot;\n&quot;;</span>
-        }
-<span class="nc" id="L371">        return str;</span>
-    }
-
-    public void processPayment(String type, double amount, boolean split, int numPeople) {
-<span class="nc bnc" id="L375" title="All 2 branches missed.">        if (type.equals(&quot;CASH&quot;)) {</span>
-<span class="nc bnc" id="L376" title="All 2 branches missed.">            if (split) {</span>
-<span class="nc" id="L377">                double each = amount / numPeople;</span>
-<span class="nc" id="L378">                System.out.println(&quot;Each person pays: &quot; + each);</span>
-            }
-<span class="nc" id="L380">            System.out.println(&quot;Cash payment received&quot;);</span>
-<span class="nc bnc" id="L381" title="All 2 branches missed.">        } else if (type.equals(&quot;CARD&quot;)) {</span>
-<span class="nc" id="L382">            System.out.println(&quot;Processing card&quot;);</span>
-<span class="nc bnc" id="L383" title="All 2 branches missed.">            if (split) {</span>
-<span class="nc" id="L384">                System.out.println(&quot;Splitting between &quot; + numPeople);</span>
-            }
-<span class="nc" id="L386">            System.out.println(&quot;Card payment received&quot;);</span>
-<span class="nc bnc" id="L387" title="All 2 branches missed.">        } else if (type.equals(&quot;CHECK&quot;)) {</span>
-<span class="nc" id="L388">            System.out.println(&quot;Check payment&quot;);</span>
-        }
-<span class="nc" id="L390">        orderStatus = 4;</span>
-<span class="nc" id="L391">    }</span>
-
-    private int getItemQuantity(String id) {
-<span class="nc" id="L394">        int qty = 0;</span>
-        try {
-<span class="nc bnc" id="L396" title="All 2 branches missed.">            for (OrderItem item : items) {</span>
-<span class="nc bnc" id="L397" title="All 2 branches missed.">                if (item.getMenuItem().getItemId().equals(id)) {</span>
-<span class="nc" id="L398">                    qty++;</span>
-                }
-<span class="nc" id="L400">            }</span>
-<span class="nc" id="L401">        } catch (Exception e) {</span>
-<span class="nc" id="L402">        }</span>
-<span class="nc" id="L403">        return qty;</span>
-    }
-
-    private boolean validateOrderItemsForProcessingAndEnsureAllConstraintsAreSatisfiedIncludingQuantityLimitsAndPriceThresholds(MenuItem item, List&lt;String&gt; mods) {
-<span class="nc" id="L407">        return true;</span>
->>>>>>> Review
+<span class="nc" id="L508">        return true;</span>
     }
 
     /**
@@ -758,63 +516,44 @@ public class Order {
         private List&lt;String&gt; modifiers;
         private double price;
 
-<<<<<<< HEAD
         // SER316 TASK 2 SPOTBUGS FIX
-<span class="fc" id="L513">        public OrderItem(MenuItem menuItem, List&lt;String&gt; modifiers, double price) {</span>
-<span class="fc" id="L514">            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),</span>
-<span class="fc" id="L515">                    menuItem.getBasePrice(), menuItem.getCategory());</span>
-<span class="fc" id="L516">            copy.setStockCount(menuItem.getStockCount());</span>
-<span class="fc" id="L517">            copy.setAvailable(menuItem.isAvailable());</span>
-<span class="fc bfc" id="L518" title="All 2 branches covered.">            for (String flag : menuItem.getDietaryFlags()) {</span>
-<span class="fc" id="L519">                copy.addDietaryFlag(flag);</span>
-<span class="fc" id="L520">            }</span>
-<span class="fc bfc" id="L521" title="All 2 branches covered.">            for (String modifier : menuItem.getAllowedModifiers()) {</span>
-<span class="fc" id="L522">                copy.addAllowedModifier(modifier);</span>
-<span class="fc" id="L523">            }</span>
-<span class="fc" id="L524">            this.menuItem = copy;</span>
-<span class="fc" id="L525">            this.modifiers = new ArrayList&lt;&gt;(modifiers);</span>
-<span class="fc" id="L526">            this.price = price;</span>
-<span class="fc" id="L527">        }</span>
+<span class="fc" id="L520">        public OrderItem(MenuItem menuItem, List&lt;String&gt; modifiers, double price) {</span>
+<span class="fc" id="L521">            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),</span>
+<span class="fc" id="L522">                    menuItem.getBasePrice(), menuItem.getCategory());</span>
+<span class="fc" id="L523">            copy.setStockCount(menuItem.getStockCount());</span>
+<span class="fc" id="L524">            copy.setAvailable(menuItem.isAvailable());</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">            for (String flag : menuItem.getDietaryFlags()) {</span>
+<span class="fc" id="L526">                copy.addDietaryFlag(flag);</span>
+<span class="fc" id="L527">            }</span>
+<span class="fc bfc" id="L528" title="All 2 branches covered.">            for (String modifier : menuItem.getAllowedModifiers()) {</span>
+<span class="fc" id="L529">                copy.addAllowedModifier(modifier);</span>
+<span class="fc" id="L530">            }</span>
+<span class="fc" id="L531">            this.menuItem = copy;</span>
+<span class="fc" id="L532">            this.modifiers = new ArrayList&lt;&gt;(modifiers);</span>
+<span class="fc" id="L533">            this.price = price;</span>
+<span class="fc" id="L534">        }</span>
 
         // SER316 TASK 2 SPOTBUGS FIX: 
         public MenuItem getMenuItem() {
-<span class="fc" id="L531">            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),</span>
-<span class="fc" id="L532">                    menuItem.getBasePrice(), menuItem.getCategory());</span>
-<span class="fc" id="L533">            copy.setStockCount(menuItem.getStockCount());</span>
-<span class="fc" id="L534">            copy.setAvailable(menuItem.isAvailable());</span>
-<span class="fc bfc" id="L535" title="All 2 branches covered.">            for (String flag : menuItem.getDietaryFlags()) {</span>
-<span class="fc" id="L536">                copy.addDietaryFlag(flag);</span>
-<span class="fc" id="L537">            }</span>
-<span class="fc bfc" id="L538" title="All 2 branches covered.">            for (String modifier : menuItem.getAllowedModifiers()) {</span>
-<span class="fc" id="L539">                copy.addAllowedModifier(modifier);</span>
-<span class="fc" id="L540">            }</span>
-<span class="fc" id="L541">            return copy;</span>
+<span class="fc" id="L538">            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),</span>
+<span class="fc" id="L539">                    menuItem.getBasePrice(), menuItem.getCategory());</span>
+<span class="fc" id="L540">            copy.setStockCount(menuItem.getStockCount());</span>
+<span class="fc" id="L541">            copy.setAvailable(menuItem.isAvailable());</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">            for (String flag : menuItem.getDietaryFlags()) {</span>
+<span class="fc" id="L543">                copy.addDietaryFlag(flag);</span>
+<span class="fc" id="L544">            }</span>
+<span class="fc bfc" id="L545" title="All 2 branches covered.">            for (String modifier : menuItem.getAllowedModifiers()) {</span>
+<span class="fc" id="L546">                copy.addAllowedModifier(modifier);</span>
+<span class="fc" id="L547">            }</span>
+<span class="fc" id="L548">            return copy;</span>
         }
 
         public List&lt;String&gt; getModifiers() {
-<span class="nc" id="L545">            return new ArrayList&lt;&gt;(modifiers);</span>
+<span class="nc" id="L552">            return new ArrayList&lt;&gt;(modifiers);</span>
         }
 
         public double getPrice() {
-<span class="nc" id="L549">            return price;</span>
-=======
-<span class="fc" id="L418">        public OrderItem(MenuItem menuItem, List&lt;String&gt; modifiers, double price) {</span>
-<span class="fc" id="L419">            this.menuItem = menuItem;</span>
-<span class="fc" id="L420">            this.modifiers = new ArrayList&lt;&gt;(modifiers);</span>
-<span class="fc" id="L421">            this.price = price;</span>
-<span class="fc" id="L422">        }</span>
-
-        public MenuItem getMenuItem() {
-<span class="fc" id="L425">            return menuItem;</span>
-        }
-
-        public List&lt;String&gt; getModifiers() {
-<span class="nc" id="L429">            return new ArrayList&lt;&gt;(modifiers);</span>
-        }
-
-        public double getPrice() {
-<span class="nc" id="L433">            return price;</span>
->>>>>>> Review
+<span class="nc" id="L556">            return price;</span>
         }
     }
 }
