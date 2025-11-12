@@ -17,7 +17,7 @@
 @if "%DEBUG%"=="" @echo off
 @rem ##########################################################################
 @rem
-@rem  Restaurant-Students startup script for Windows
+@rem  ser316-fall25-EyadMhmd02 startup script for Windows
 @rem
 @rem ##########################################################################
 
@@ -33,7 +33,7 @@ set APP_HOME=%DIRNAME%..
 @rem Resolve any "." and ".." in APP_HOME to make it shorter.
 for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
-@rem Add default JVM options here. You can also use JAVA_OPTS and RESTAURANT_STUDENTS_OPTS to pass JVM options to this script.
+@rem Add default JVM options here. You can also use JAVA_OPTS and SER316_FALL25_EYAD_MHMD02_OPTS to pass JVM options to this script.
 set DEFAULT_JVM_OPTS=
 
 @rem Find java.exe
@@ -68,22 +68,22 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\Restaurant-Students.jar;%APP_HOME%\lib\cls
+set CLASSPATH=%APP_HOME%\lib\ser316-fall25-EyadMhmd02.jar;%APP_HOME%\lib\cls
 
 
-@rem Execute Restaurant-Students
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %RESTAURANT_STUDENTS_OPTS%  -classpath "%CLASSPATH%" Main %*
+@rem Execute ser316-fall25-EyadMhmd02
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %SER316_FALL25_EYAD_MHMD02_OPTS%  -classpath "%CLASSPATH%" Main %*
 
 :end
 @rem End local scope for the variables with windows NT shell
 if %ERRORLEVEL% equ 0 goto mainEnd
 
 :fail
-rem Set variable RESTAURANT_STUDENTS_EXIT_CONSOLE if you need the _script_ return code instead of
+rem Set variable SER316_FALL25_EYAD_MHMD02_EXIT_CONSOLE if you need the _script_ return code instead of
 rem the _cmd.exe /c_ return code!
 set EXIT_CODE=%ERRORLEVEL%
 if %EXIT_CODE% equ 0 set EXIT_CODE=1
-if not ""=="%RESTAURANT_STUDENTS_EXIT_CONSOLE%" exit %EXIT_CODE%
+if not ""=="%SER316_FALL25_EYAD_MHMD02_EXIT_CONSOLE%" exit %EXIT_CODE%
 exit /b %EXIT_CODE%
 
 :mainEnd
