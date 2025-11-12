@@ -10,8 +10,8 @@ buildscript {
 plugins {
     id 'java'
     id 'application'
-   // id 'checkstyle'
-   // id 'com.github.spotbugs' version '6.0.26'
+    id 'checkstyle'
+    id 'com.github.spotbugs' version '6.0.26'
     id 'jacoco'
 }
 //
@@ -51,45 +51,55 @@ test {
 }
 
 // // Uncomment for Assignment 4 - Checkstyle configuration
-// checkstyle {
-//    toolVersion = '10.12.5'
-//    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-//    ignoreFailures = true
-//    showViolations = true
-// }
+ checkstyle {
+    toolVersion = '10.12.5'
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    ignoreFailures = true
+    showViolations = true
+ }
 
-// checkstyleMain {
-//    source = 'src/main/java'
-// }
+checkstyleMain {
+    source = 'src/main/java'
+    reports {
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/checkstyle/main.html")
+        xml.required = false
+    }
+}
 
-// checkstyleTest {
-//    source = 'src/test/java'
-// }
+checkstyleTest {
+    source = 'src/test/java'
+    reports {
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/checkstyle/test.html")
+        xml.required = false
+    }
+}
 
 // // Uncomment for Assignment 4 - SpotBugs configuration
-// spotbugs {
-//    ignoreFailures = true
-// }
+spotbugs {
+    ignoreFailures = true
+}
 
-// spotbugsMain {
-//    reports {
-//        html {
-//            required = true
-//            outputLocation = file("$buildDir/reports/spotbugs/main.html")
-//            setStylesheet('fancy-hist.xsl')
-//        }
-//    }
-// }
+spotbugsMain {
+    reports {
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/main.html")
+            setStylesheet('fancy-hist.xsl')
+        }
+    }
+}
 
-// spotbugsTest {
-//    reports {
-//        html {
-//            required = true
-//            outputLocation = file("$buildDir/reports/spotbugs/test.html")
-//            setStylesheet('fancy-hist.xsl')
-//        }
-//    }
-// }
+spotbugsTest {
+    reports {
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/test.html")
+            setStylesheet('fancy-hist.xsl')
+        }
+    }
+}
 
 // JaCoCo for code coverage
 jacoco {
