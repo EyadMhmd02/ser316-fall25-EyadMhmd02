@@ -1,0 +1,10 @@
+# Gradle cache directory (exclude)
+.gradle/
+build/
+*.class
+bin/
+cls/
+
+# Explicitly include Gradle wrapper files (these should be tracked)
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties

@@ -48,6 +48,7 @@ test {
     }
 
     finalizedBy jacocoTestReport
+<<<<<<< HEAD
 }
 
 // Ensure checkstyle and spotbugs run during build
@@ -70,13 +71,26 @@ spotbugsTest {
 
 // // Uncomment for Assignment 4 - Checkstyle configuration
 checkstyle {
+=======
+}
+
+// // Uncomment for Assignment 4 - Checkstyle configuration
+ checkstyle {
+>>>>>>> StaticAnalysis
     toolVersion = '10.12.5'
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     ignoreFailures = true
     showViolations = true
+<<<<<<< HEAD
 }
 
 checkstyleMain {
+=======
+ }
+
+checkstyleMain {
+    source = 'src/main/java'
+>>>>>>> StaticAnalysis
     reports {
         html.required = true
         html.outputLocation = file("$buildDir/reports/checkstyle/main.html")
@@ -85,6 +99,10 @@ checkstyleMain {
 }
 
 checkstyleTest {
+<<<<<<< HEAD
+=======
+    source = 'src/test/java'
+>>>>>>> StaticAnalysis
     reports {
         html.required = true
         html.outputLocation = file("$buildDir/reports/checkstyle/test.html")
@@ -129,4 +147,8 @@ jacocoTestReport {
         html.required = true
         html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test/html')
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> StaticAnalysis

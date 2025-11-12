@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
-import java.io.Serializable;
 
 /**
  * Represents a restaurant order for a table.
@@ -33,6 +31,28 @@ public class Order {
     /** Maximum total items in an order */
     private static final int MAX_TOTAL_ITEMS = 5;
 
+    /** Modifier prices */
+    private static final double MODIFIER_PRICE_HIGH = 1.50;
+    private static final double MODIFIER_PRICE_MED = 1.00;
+    private static final double MODIFIER_PRICE_LOW = 0.75;
+    private static final double MODIFIER_DISCOUNT = 0.50;
+
+    /** Promotion discount rates */
+    private static final double APPETIZER_DISCOUNT = 0.20;
+    private static final double ENTREE_DISCOUNT = 0.15;
+
+    /** Status codes */
+    private static final int FINALIZED_STATUS = 3;
+    private static final int STATUS_DELIVERED = 3;
+    private static final int STATUS_PAID = 4;
+
+    /** Return codes */
+    private static final double RETURN_FINALIZED = 5.0;
+    private static final double RETURN_NULL_ITEM = 3.1;
+    private static final double RETURN_INVALID_ID = 4.1;
+    private static final double RETURN_UNAVAILABLE = 3.0;
+    private static final double RETURN_INVALID_MODIFIER = 2.1;
+
     /** Tracks applied promotions */
     protected List<String> appliedPromotions;
 
@@ -41,8 +61,12 @@ public class Order {
      * @param table the table
      * @param customerName customer name
      */
+    // SER316 TASK 2 SPOTBUGS FIX
     public Order(Table table, String customerName) {
-        this.table = table;
+        Table copy = new Table(table.getTableNumber(), table.getPartySize());
+        copy.setServerName(table.getServerName());
+        copy.setOccupied(table.isOccupied());
+        this.table = copy;
         this.customerName = customerName;
         this.items = new ArrayList<>();
         this.totalPrice = 0.0;
@@ -62,8 +86,17 @@ public class Order {
         this.appliedPromotions = new ArrayList<>();
     }
 
+    /**
+     * Initializes order with table and customer name
+     * @param table the table
+     * @param customerName customer name
+     */
+    // SER316 TASK 2 SPOTBUGS FIX
     public void initOrder(Table table, String customerName) {
-        this.table = table;
+        Table copy = new Table(table.getTableNumber(), table.getPartySize());
+        copy.setServerName(table.getServerName());
+        copy.setOccupied(table.isOccupied());
+        this.table = copy;
         this.customerName = customerName;
         this.items.clear();
         this.totalPrice = 0.0;
@@ -83,8 +116,12 @@ public class Order {
      * Gets the table
      * @return table object
      */
+    // SER316 TASK 2 SPOTBUGS FIX
     public Table getTable() {
-        return table;
+        Table copy = new Table(table.getTableNumber(), table.getPartySize());
+        copy.setServerName(table.getServerName());
+        copy.setOccupied(table.isOccupied());
+        return copy;
     }
 
     /**
@@ -153,17 +190,17 @@ public class Order {
     protected double calculateModifierPrice(List<String> modifiers) {
         double prc = 0.0;
         for (String mod : modifiers) {
-            if(mod.equals("EXTRA_CHEESE")||mod.equals("EXTRA_ONIONS")||mod.equals("SOUR_CREAM")){
-                prc+=1.50;
+            if (mod.equals("EXTRA_CHEESE") || mod.equals("EXTRA_ONIONS") || mod.equals("SOUR_CREAM")) {
+                prc += MODIFIER_PRICE_HIGH;
             }
-            if(mod.equals("EXTRA_BREAD")||mod.equals("BUTTER")){
-                prc+=1.00;
+            if (mod.equals("EXTRA_BREAD") || mod.equals("BUTTER")) {
+                prc += MODIFIER_PRICE_MED;
             }
-            if(mod.equals("CROUTONS")){
-                prc+=0.75;
+            if (mod.equals("CROUTONS")) {
+                prc += MODIFIER_PRICE_LOW;
             }
-            if(mod.equals("NO_CHEESE")||mod.equals("NO_ONIONS")||mod.equals("NO_TOMATOES")){
-                prc-=0.50;
+            if (mod.equals("NO_CHEESE") || mod.equals("NO_ONIONS") || mod.equals("NO_TOMATOES")) {
+                prc -= MODIFIER_DISCOUNT;
             }
         }
         return prc;
@@ -173,12 +210,12 @@ public class Order {
         double discount = 0.0;
 
         if (item.getCategory().equals("APPETIZER")) {
-            discount = 0.20;
+            discount = APPETIZER_DISCOUNT;
             appliedPromotions.add("APPETIZER_SPECIAL_20");
         }
 
         if (item.getCategory().equals("ENTREE") && modifiers.size() >= 2) {
-            discount = Math.max(discount, 0.15);
+            discount = Math.max(discount, ENTREE_DISCOUNT);
             appliedPromotions.add("PREMIUM_ENTREE_15");
         }
 
@@ -265,26 +302,83 @@ public class Order {
      * @return status code indicating result
      */
     public double processOrderItem(MenuItem item, List<String> modifiers) {
+        // 1) Check if order status allows modifications (status < 3) -> 5.0
+        if (orderStatus >= FINALIZED_STATUS) {
+            return RETURN_FINALIZED;
+        }
+
+        // 2) Check if item is null -> 3.1
+        if (item == null) {
+            return RETURN_NULL_ITEM;
+        }
+
+        // 3) Validate item ID format (alphanumeric, not null) -> 4.1
+        String itemId = item.getItemId();
+        if (itemId == null || !itemId.matches("^[A-Za-z0-9]+$")) {
+            return RETURN_INVALID_ID;
+        }
+
+        // 4) Check if item is available -> 3.0
+        if (!item.isAvailable()) {
+            return RETURN_UNAVAILABLE;
+        }
+
+        // Normalize modifiers: null treated as empty list
+        List<String> mods = (modifiers == null) ? new ArrayList<>() : new ArrayList<>(modifiers);
+
+        // 5) Check quantity limit (max 5 of same itemId) -> 2.0
+        if (getItemCountById(itemId) >= MAX_ITEM_QUANTITY) {
+            return 2.0;
+        }
+
+        // 6) Validate all modifiers are allowed for this item -> 2.1
+        for (String mod : mods) {
+            if (!item.isModifierAllowed(mod)) {
+                return RETURN_INVALID_MODIFIER;
+            }
+        }
+
+        // 7) Calculate total price with modifiers (use calculateModifierPrice helper)
+        double price = item.getBasePrice() + calculateModifierPrice(mods);
+
+        // 8) Add item and update total (skip promotions, compatibility, max total per simplified spec)
+        items.add(new OrderItem(item, mods, price));
+        totalPrice += price;
+        item.reduceStock();
+
+        // 9) Return 0.0
         return 0.0;
     }
 
+    /**
+     * Submits the order for processing
+     */
     public void submitOrder() {
         orderStatus = 1;
     }
 
+    /**
+     * Marks the order as ready
+     */
     public void markReady() {
         if (orderStatus < 2) {
             orderStatus = 2;
         }
     }
 
+    /**
+     * Marks the order as delivered
+     */
     public void markDelivered() {
-        orderStatus = 3;
+        orderStatus = STATUS_DELIVERED;
     }
 
+    /**
+     * Marks the order as paid
+     */
     public void markPaid() {
-        if (orderStatus >= 3) {
-            orderStatus = 4;
+        if (orderStatus >= FINALIZED_STATUS) {
+            orderStatus = STATUS_PAID;
         }
     }
 
@@ -415,14 +509,36 @@ public class Order {
         private List<String> modifiers;
         private double price;
 
+        // SER316 TASK 2 SPOTBUGS FIX
         public OrderItem(MenuItem menuItem, List<String> modifiers, double price) {
-            this.menuItem = menuItem;
+            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),
+                    menuItem.getBasePrice(), menuItem.getCategory());
+            copy.setStockCount(menuItem.getStockCount());
+            copy.setAvailable(menuItem.isAvailable());
+            for (String flag : menuItem.getDietaryFlags()) {
+                copy.addDietaryFlag(flag);
+            }
+            for (String modifier : menuItem.getAllowedModifiers()) {
+                copy.addAllowedModifier(modifier);
+            }
+            this.menuItem = copy;
             this.modifiers = new ArrayList<>(modifiers);
             this.price = price;
         }
 
+        // SER316 TASK 2 SPOTBUGS FIX: 
         public MenuItem getMenuItem() {
-            return menuItem;
+            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),
+                    menuItem.getBasePrice(), menuItem.getCategory());
+            copy.setStockCount(menuItem.getStockCount());
+            copy.setAvailable(menuItem.isAvailable());
+            for (String flag : menuItem.getDietaryFlags()) {
+                copy.addDietaryFlag(flag);
+            }
+            for (String modifier : menuItem.getAllowedModifiers()) {
+                copy.addAllowedModifier(modifier);
+            }
+            return copy;
         }
 
         public List<String> getModifiers() {
