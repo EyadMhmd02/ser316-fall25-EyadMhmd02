@@ -9,21 +9,9 @@ name: Java CI with Gradle
 
 on:
   push:
-<<<<<<< HEAD
-<<<<<<< HEAD
-    branches: [ "main", "Blackbox", "Whitebox", "StaticAnalysis", "Review" ]
+    branches: [ "main", "Blackbox", "WhiteBox", "StaticAnalysis", "Review", "dev" ]
   pull_request:
-    branches: [ "main", "Blackbox", "Whitebox", "StaticAnalysis", "Review" ]
-=======
-    branches: [ "main", "Blackbox", "WhiteBox", "StaticAnalysis", "Review" ]
-  pull_request:
-    branches: [ "main", "Blackbox", "WhiteBox", "StaticAnalysis", "Review" ]
->>>>>>> Review
-=======
-    branches: [ "main", "Blackbox", "Whitebox", "StaticAnalysis", "Review" ]
-  pull_request:
-    branches: [ "main", "Blackbox", "Whitebox", "StaticAnalysis", "Review" ]
->>>>>>> StaticAnalysis
+    branches: [ "main", "Blackbox", "WhiteBox", "StaticAnalysis", "Review", "dev" ]
 
 jobs:
   build:
@@ -34,23 +22,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-<<<<<<< HEAD
-<<<<<<< HEAD
     - name: Set up JDK 18
       uses: actions/setup-java@v4
       with:
         java-version: '18'
-=======
-=======
->>>>>>> StaticAnalysis
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-<<<<<<< HEAD
->>>>>>> Review
-=======
->>>>>>> StaticAnalysis
         distribution: 'temurin'
 
     - name: Grant execute permission for gradlew
