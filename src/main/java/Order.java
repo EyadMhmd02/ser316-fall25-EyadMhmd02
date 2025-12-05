@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,10 +38,6 @@ public class Order {
     private static final double MODIFIER_PRICE_LOW = 0.75;
     private static final double MODIFIER_DISCOUNT = 0.50;
 
-    /** Promotion discount rates */
-    private static final double APPETIZER_DISCOUNT = 0.20;
-    private static final double ENTREE_DISCOUNT = 0.15;
-
     /** Status codes */
     private static final int STATUS_READY = 2;
     private static final int FINALIZED_STATUS = 3;
@@ -58,6 +55,9 @@ public class Order {
 
     /** Tracks applied promotions */
     protected List<String> appliedPromotions;
+    
+    /** List of available promotion strategies */
+    protected List<Promotion> availablePromotions;
 
     /**
      * Creates a new order for a table
@@ -75,6 +75,7 @@ public class Order {
         this.totalPrice = 0.0;
         this.orderStatus = 0;
         this.appliedPromotions = new ArrayList<>();
+        this.availablePromotions = initializePromotions();
     }
 
     /**
@@ -87,6 +88,7 @@ public class Order {
         this.totalPrice = 0.0;
         this.orderStatus = 0;
         this.appliedPromotions = new ArrayList<>();
+        this.availablePromotions = initializePromotions();
     }
 
     /**
@@ -105,6 +107,7 @@ public class Order {
         this.totalPrice = 0.0;
         this.orderStatus = 0;
         this.appliedPromotions.clear();
+        this.availablePromotions = initializePromotions();
     }
 
     /**
@@ -203,20 +206,55 @@ public class Order {
         return modifierPrice;
     }
 
+    /**
+     * Initializes the list of available promotion strategies.
+     * 
+     * @return list of promotion strategies
+     */
+    protected List<Promotion> initializePromotions() {
+        return new ArrayList<>(Arrays.asList(
+            new AppetizerPromotion(),
+            new EntreePromotion()
+        ));
+    }
+    
+    /**
+     * Calculates the best applicable promotion discount for an item.
+     * Iterates through all available promotion strategies and applies
+     * the one with the highest discount rate.
+     * 
+     * This refactored method uses the Strategy pattern to make the
+     * promotion system extensible. New promotions can be added by:
+     * 1. Creating a new class implementing the Promotion interface
+     * 2. Adding it to the initializePromotions() method
+     * 
+     * No other code needs to be modified.
+     * 
+     * @param item the menu item being ordered
+     * @param modifiers list of modifiers applied to the item
+     * @return the highest discount percentage (0.0 to 1.0) from applicable promotions
+     */
     protected double calculatePromotion(MenuItem item, List<String> modifiers) {
-        double discount = 0.0;
-
-        if (item.getCategory().equals("APPETIZER")) {
-            discount = APPETIZER_DISCOUNT;
-            appliedPromotions.add("APPETIZER_SPECIAL_20");
+        double bestDiscount = 0.0;
+        Promotion bestPromotion = null;
+        
+        // Iterate through all available promotions to find the best one
+        for (Promotion promotion : availablePromotions) {
+            if (promotion.isApplicable(item, modifiers)) {
+                double discount = promotion.calculateDiscount(item, modifiers);
+                if (discount > bestDiscount) {
+                    bestDiscount = discount;
+                    bestPromotion = promotion;
+                }
+            }
         }
-
-        if (item.getCategory().equals("ENTREE") && modifiers.size() >= 2) {
-            discount = Math.max(discount, ENTREE_DISCOUNT);
-            appliedPromotions.add("PREMIUM_ENTREE_15");
+        
+        // Track the applied promotion
+        if (bestPromotion != null) {
+            appliedPromotions.add(bestPromotion.getPromotionCode());
         }
-
-        return discount;
+        
+        return bestDiscount;
     }
 
     /**
