@@ -37,6 +37,17 @@ public class Order {
     private static final double MODIFIER_PRICE_MED = 1.00;
     private static final double MODIFIER_PRICE_LOW = 0.75;
     private static final double MODIFIER_DISCOUNT = 0.50;
+    
+    /** Modifier string constants */
+    private static final String MODIFIER_EXTRA_CHEESE = "EXTRA_CHEESE";
+    private static final String MODIFIER_EXTRA_ONIONS = "EXTRA_ONIONS";
+    private static final String MODIFIER_SOUR_CREAM = "SOUR_CREAM";
+    private static final String MODIFIER_EXTRA_BREAD = "EXTRA_BREAD";
+    private static final String MODIFIER_BUTTER = "BUTTER";
+    private static final String MODIFIER_CROUTONS = "CROUTONS";
+    private static final String MODIFIER_NO_CHEESE = "NO_CHEESE";
+    private static final String MODIFIER_NO_ONIONS = "NO_ONIONS";
+    private static final String MODIFIER_NO_TOMATOES = "NO_TOMATOES";
 
     /** Status codes */
     private static final int STATUS_READY = 2;
@@ -66,10 +77,7 @@ public class Order {
      */
     // SER316 TASK 2 SPOTBUGS FIX
     public Order(Table table, String customerName) {
-        Table copy = new Table(table.getTableNumber(), table.getPartySize());
-        copy.setServerName(table.getServerName());
-        copy.setOccupied(table.isOccupied());
-        this.table = copy;
+        this.table = copyTable(table);
         this.customerName = customerName;
         this.items = new ArrayList<>();
         this.totalPrice = 0.0;
@@ -98,10 +106,7 @@ public class Order {
      */
     // SER316 TASK 2 SPOTBUGS FIX
     public void initOrder(Table table, String customerName) {
-        Table copy = new Table(table.getTableNumber(), table.getPartySize());
-        copy.setServerName(table.getServerName());
-        copy.setOccupied(table.isOccupied());
-        this.table = copy;
+        this.table = copyTable(table);
         this.customerName = customerName;
         this.items.clear();
         this.totalPrice = 0.0;
@@ -119,15 +124,24 @@ public class Order {
     }
 
     /**
+     * Creates a defensive copy of a Table object.
+     * @param original the table to copy
+     * @return a new Table instance with copied values
+     */
+    private Table copyTable(Table original) {
+        Table copy = new Table(original.getTableNumber(), original.getPartySize());
+        copy.setServerName(original.getServerName());
+        copy.setOccupied(original.isOccupied());
+        return copy;
+    }
+    
+    /**
      * Gets the table
      * @return table object
      */
     // SER316 TASK 2 SPOTBUGS FIX
     public Table getTable() {
-        Table copy = new Table(table.getTableNumber(), table.getPartySize());
-        copy.setServerName(table.getServerName());
-        copy.setOccupied(table.isOccupied());
-        return copy;
+        return copyTable(table);
     }
 
     /**
@@ -177,11 +191,19 @@ public class Order {
         return count;
     }
 
+    /**
+     * Checks if modifier combinations are compatible.
+     * NOTE: This method is not used in the simplified specification implementation
+     * but is kept for compatibility with black box test classes (Order0-4).
+     * 
+     * @param modifiers list of modifiers to check
+     * @return true if modifiers are compatible, false otherwise
+     */
     protected boolean areModifiersCompatible(List<String> modifiers) {
-        if (modifiers.contains("NO_CHEESE") && modifiers.contains("EXTRA_CHEESE")) {
+        if (modifiers.contains(MODIFIER_NO_CHEESE) && modifiers.contains(MODIFIER_EXTRA_CHEESE)) {
             return false;
         }
-        if (modifiers.contains("NO_ONIONS") && modifiers.contains("EXTRA_ONIONS")) {
+        if (modifiers.contains(MODIFIER_NO_ONIONS) && modifiers.contains(MODIFIER_EXTRA_ONIONS)) {
             return false;
         }
         return true;
@@ -190,16 +212,16 @@ public class Order {
     protected double calculateModifierPrice(List<String> modifiers) {
         double modifierPrice = 0.0;
         for (String modifier : modifiers) {
-            if (modifier.equals("EXTRA_CHEESE") || modifier.equals("EXTRA_ONIONS") || modifier.equals("SOUR_CREAM")) {
+            if (modifier.equals(MODIFIER_EXTRA_CHEESE) || modifier.equals(MODIFIER_EXTRA_ONIONS) || modifier.equals(MODIFIER_SOUR_CREAM)) {
                 modifierPrice += MODIFIER_PRICE_HIGH;
             }
-            if (modifier.equals("EXTRA_BREAD") || modifier.equals("BUTTER")) {
+            if (modifier.equals(MODIFIER_EXTRA_BREAD) || modifier.equals(MODIFIER_BUTTER)) {
                 modifierPrice += MODIFIER_PRICE_MED;
             }
-            if (modifier.equals("CROUTONS")) {
+            if (modifier.equals(MODIFIER_CROUTONS)) {
                 modifierPrice += MODIFIER_PRICE_LOW;
             }
-            if (modifier.equals("NO_CHEESE") || modifier.equals("NO_ONIONS") || modifier.equals("NO_TOMATOES")) {
+            if (modifier.equals(MODIFIER_NO_CHEESE) || modifier.equals(MODIFIER_NO_ONIONS) || modifier.equals(MODIFIER_NO_TOMATOES)) {
                 modifierPrice -= MODIFIER_DISCOUNT;
             }
         }
@@ -545,36 +567,35 @@ public class Order {
         private List<String> modifiers;
         private double price;
 
-        // SER316 TASK 2 SPOTBUGS FIX
-        public OrderItem(MenuItem menuItem, List<String> modifiers, double price) {
-            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),
-                    menuItem.getBasePrice(), menuItem.getCategory());
-            copy.setStockCount(menuItem.getStockCount());
-            copy.setAvailable(menuItem.isAvailable());
-            for (String flag : menuItem.getDietaryFlags()) {
+        /**
+         * Creates a defensive copy of a MenuItem object.
+         * @param original the menu item to copy
+         * @return a new MenuItem instance with copied values
+         */
+        private static MenuItem copyMenuItem(MenuItem original) {
+            MenuItem copy = new MenuItem(original.getItemId(), original.getName(),
+                    original.getBasePrice(), original.getCategory());
+            copy.setStockCount(original.getStockCount());
+            copy.setAvailable(original.isAvailable());
+            for (String flag : original.getDietaryFlags()) {
                 copy.addDietaryFlag(flag);
             }
-            for (String modifier : menuItem.getAllowedModifiers()) {
+            for (String modifier : original.getAllowedModifiers()) {
                 copy.addAllowedModifier(modifier);
             }
-            this.menuItem = copy;
+            return copy;
+        }
+
+        // SER316 TASK 2 SPOTBUGS FIX
+        public OrderItem(MenuItem menuItem, List<String> modifiers, double price) {
+            this.menuItem = copyMenuItem(menuItem);
             this.modifiers = new ArrayList<>(modifiers);
             this.price = price;
         }
 
         // SER316 TASK 2 SPOTBUGS FIX: 
         public MenuItem getMenuItem() {
-            MenuItem copy = new MenuItem(menuItem.getItemId(), menuItem.getName(),
-                    menuItem.getBasePrice(), menuItem.getCategory());
-            copy.setStockCount(menuItem.getStockCount());
-            copy.setAvailable(menuItem.isAvailable());
-            for (String flag : menuItem.getDietaryFlags()) {
-                copy.addDietaryFlag(flag);
-            }
-            for (String modifier : menuItem.getAllowedModifiers()) {
-                copy.addAllowedModifier(modifier);
-            }
-            return copy;
+            return copyMenuItem(menuItem);
         }
 
         public List<String> getModifiers() {
