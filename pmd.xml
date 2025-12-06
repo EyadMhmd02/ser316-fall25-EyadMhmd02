@@ -48,14 +48,28 @@
     <!-- Discourage System.out.println in production code -->
     <rule ref="category/java/bestpractices.xml/SystemPrintln" />
 
-    <!--
-    TODO for Task 4: Research PMD documentation and add more rules here.
-    Consider rules that help detect:
-    - Unused/dead code
-    - Empty code blocks
-    - Code duplication
-    - Naming conventions
-    - Other code smells from Fowler's book
-    -->
+    <!-- Detects private fields that are declared but never used -->
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateField" />
+
+    <!-- Detects empty catch blocks which often hide errors -->
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock">
+        <properties>
+            <property name="allowCommentedBlocks" value="false"/>
+        </properties>
+    </rule>
+
+    <!-- Detects variables with excessively long names -->
+    <rule ref="category/java/codestyle.xml/LongVariable">
+        <properties>
+            <property name="minimum" value="30"/>
+        </properties>
+    </rule>
+
+    <!-- Detects classes with too many methods -->
+    <rule ref="category/java/design.xml/TooManyMethods">
+        <properties>
+            <property name="maxmethods" value="10"/>
+        </properties>
+    </rule>
 
 </ruleset>
